@@ -3,10 +3,10 @@ import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
 
 @Component({
-  selector: 'page-Home',
-  templateUrl: 'Home.html'
+  selector: 'page-popular',
+  templateUrl: 'popular.html'
 })
-export class HomePage {
+export class PopularPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
   constructor(public navCtrl: NavController) {

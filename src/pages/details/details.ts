@@ -1,18 +1,14 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { DetailsPage } from '../details/details';
 
 @Component({
-  selector: 'page-Home',
-  templateUrl: 'Home.html'
+  selector: 'page-details',
+  templateUrl: 'details.html'
 })
-export class HomePage {
+export class DetailsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
   constructor(public navCtrl: NavController) {
   }
-  goToDetails(params){
-    if (!params) params = {};
-    this.navCtrl.push(DetailsPage);
-  }
+  
 }

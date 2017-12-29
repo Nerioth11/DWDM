@@ -1,0 +1,19 @@
+page-myProfile {
+  
+  .image-container {
+    background-size: cover;
+    min-height: 150px;
+    position: relative;
+    text-align: center;
+  }
+
+  .card-title {
+   position: absolute;
+   top: 36%;
+   font-size: 1.8em;
+   width: 100%;
+   font-weight: bold;
+   color: #fff;
+ }
+
+}
