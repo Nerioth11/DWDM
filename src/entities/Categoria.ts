@@ -5,7 +5,7 @@ export class Categoria implements Entity {
     private id:Number;
     private nombre:String;
     
-    constructor(id:Number, nombre:String) {
+    constructor(nombre:String, id?:Number) {
       this.id = id;
       this.nombre = nombre;
     }

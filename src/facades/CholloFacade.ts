@@ -1,5 +1,3 @@
-import { AbstractFacade } from "./AbstractFacade";
-import { Entity } from "../entities/Entity";
 import { Chollo } from "../entities/Chollo";
 import { UsuarioFacade } from "./UsuarioFacade";
 import { CategoriaFacade } from "./CategoriaFacade";
@@ -8,12 +6,14 @@ import { Usuario } from "../entities/Usuario";
 import { FavoritoFacade } from "./FavoritoFacade";
 import { ReaccionFacade } from "./ReaccionFacade";
 import { Categoria } from "../entities/Categoria";
+import { Injectable } from "@angular/core";
+import { AbstractEntityFacade } from "./AbstractEntityFacade";
 
-export class CholloFacade extends AbstractFacade{
+@Injectable()
+export class CholloFacade extends AbstractEntityFacade{
     
     public static CHOLLOS:Chollo[] = [
         new Chollo(
-            1,
             "Chollo 1",
             "http://enlace1.com",
             "El chollo 1",
@@ -25,9 +25,9 @@ export class CholloFacade extends AbstractFacade{
             null,
             UsuarioFacade.USUARIOS[0],
             CategoriaFacade.CATEGORIAS[0],
+            1
         ),
         new Chollo(
-            2,
             "Chollo 2",
             "http://enlace2.com",
             "El chollo 2",
@@ -39,14 +39,18 @@ export class CholloFacade extends AbstractFacade{
             EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS[0],
             UsuarioFacade.USUARIOS[1],
             CategoriaFacade.CATEGORIAS[1],
+            2
         )      
     ];
 
-    public create(entity: Chollo) {
-        CholloFacade.CHOLLOS.push(entity);
+    constructor(private favoritoFacade:FavoritoFacade, private reaccionFacade:ReaccionFacade){ super(); }
+    // INSERT INTO chollo (titulo,enlace,descripcion,precioAntes,precioDespues,fechaCreacion,fechaActualizacion,empresaNoPatrocinada,empresaPatrocinada,usuario,categoria) VALUES (?,?,?,?,?,?,?,?,?,?,?);
+    public create(entity: Chollo) { // INSERT + DEVOLVER ENTITY CON EL ULTIMO ID
+        this.findAll().push(entity); 
+        return entity;
     }
-
-    public edit(entity: Chollo) {
+    // UPDATE chollo SET titulo=?,enlace=?,descripcion=?,precioAntes=?,precioDespues=?,fechaCreacion=?,fechaActualizacion=?,empresaNoPatrocinada=?,empresaPatrocinada=?,usuario=?,categoria=? WHERE id=?;
+    public edit(entity: Chollo) { // EDIT
         var chollo: Chollo = this.find(entity.getId());
         chollo.setTitulo(entity.getTitulo());
         chollo.setEnlace(entity.getEnlace());
@@ -58,56 +62,109 @@ export class CholloFacade extends AbstractFacade{
         chollo.setEmpresaNoPatrocinada(entity.getEmpresaNoPatrocinada());
         chollo.setCategoria(entity.getCategoria());
     }
-    
-    public remove(entity: Chollo) {
-        CholloFacade.CHOLLOS = CholloFacade.CHOLLOS.filter(
+    // DELETE FROM chollo WHERE id=?;
+    public remove(entity: Chollo) { // DELETE
+        CholloFacade.CHOLLOS = this.findAll().filter(
             (chollo) => chollo.getId() !== entity.getId()
         );
 
-        FavoritoFacade.removeWithSave(entity);
-        ReaccionFacade.removeWithSave(entity);
+        this.favoritoFacade.removeWithSave(entity);
+        this.reaccionFacade.removeWithSave(entity);
     }
-
+    // SELECT chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
+    // usuario.id AS usuarioId,usuario.telefono,usuario.alias,usuario.administrador,
+    // categoria.id AS categoriaID, categoria.nombre AS categoriaNombre,
+    // empresaPatrocinada.id AS empresaPatrocinadaID, empresaPatrocinada.nombre AS empresaPatrocinadaNombre
+    // FROM (((chollo
+    // INNER JOIN usuario ON chollo.usuario = usuario.id)
+    // INNER JOIN categoria ON chollo.categoria = categoria.id)
+    // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada = empresaPatrocinada.id)
+    // WHERE chollo.id=?;
     public find(id: Number) {
-        return CholloFacade.CHOLLOS.find(
+        return this.findAll().find(
             (chollo) => chollo.getId() === id 
         );
     }
+    // SELECT chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
+    // usuario.id AS usuarioId,usuario.telefono,usuario.alias,usuario.administrador,
+    // categoria.id AS categoriaID, categoria.nombre AS categoriaNombre,
+    // empresaPatrocinada.id AS empresaPatrocinadaID, empresaPatrocinada.nombre AS empresaPatrocinadaNombre
+    // FROM (((chollo
+    // INNER JOIN usuario ON chollo.usuario = usuario.id)
+    // INNER JOIN categoria ON chollo.categoria = categoria.id)
+    // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada = empresaPatrocinada.id);
+    public findAll() {
+        return CholloFacade.CHOLLOS;
+    }
 
+    // SELECT chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
+    // usuario.id AS usuarioId,usuario.telefono,usuario.alias,usuario.administrador,
+    // categoria.id AS categoriaID, categoria.nombre AS categoriaNombre,
+    // empresaPatrocinada.id AS empresaPatrocinadaID, empresaPatrocinada.nombre AS empresaPatrocinadaNombre
+    // FROM (((chollo
+    // INNER JOIN usuario ON chollo.usuario = usuario.id)
+    // INNER JOIN categoria ON chollo.categoria = categoria.id)
+    // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada = empresaPatrocinada.id)
+    // WHERE chollo.usuario=?;
     public findByUser(user: Usuario){
-        return CholloFacade.CHOLLOS.filter(
+        return this.findAll().filter(
             (chollo) => chollo.getUsuario().getId() === user.getId() 
         );
     }
-
+    // SELECT chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
+    // usuario.id AS usuarioId,usuario.telefono,usuario.alias,usuario.administrador,
+    // categoria.id AS categoriaID, categoria.nombre AS categoriaNombre,
+    // empresaPatrocinada.id AS empresaPatrocinadaID, empresaPatrocinada.nombre AS empresaPatrocinadaNombre
+    // FROM (((chollo
+    // INNER JOIN usuario ON chollo.usuario = usuario.id)
+    // INNER JOIN categoria ON chollo.categoria = categoria.id)
+    // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada = empresaPatrocinada.id)
+    // WHERE chollo.categoria=?;
     public findByCategory(categoria:Categoria){
-        return CholloFacade.CHOLLOS.filter(
+        return this.findAll().filter(
             (chollo) => chollo.getCategoria().getId() === categoria.getId() 
         );
     }
 
     public findPopulars(){
-        return CholloFacade.CHOLLOS.sort(
+        return this.findAll().sort(
             (chollo1, chollo2) => (this.getLikesCountFor(chollo1) - this.getDislikesCountFor(chollo1)) - (this.getLikesCountFor(chollo2) - this.getDislikesCountFor(chollo2))
         );
     }
 
+    // SELECT 
+    // chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
+    // empresaPatrocinada.id AS empresaPatrocinadaID, empresaPatrocinada.nombre AS empresaPatrocinadaNombre,
+    // categoria.id AS categoriaID, categoria.nombre AS categoriaNombre
+    // FROM (((favorito
+    // INNER JOIN chollo ON favorito.chollo = chollo.id)
+    // INNER JOIN categoria ON chollo.categoria = categoria.id)
+    // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada= empresaPatrocinada.id)
+    // WHERE favorito.usuario=?;
     public findFavouritesByUser(user: Usuario){
-        return FavoritoFacade.FAVORITOS.filter(
+        return this.favoritoFacade.findAll().filter(
             (favorito) => favorito.getUsuario().getId() === user.getId() 
         ).map(
             (favorito) => favorito.getChollo()
         );
     }
-
+    // SELECT COUNT(*)
+    // FROM (reaccion
+    // INNER JOIN chollo ON reaccion.chollo = chollo.id)
+    // WHERE chollo.id=?
+    // AND reaccion.positiva=1;
     public getLikesCountFor(chollo: Chollo){
-        return ReaccionFacade.REACCIONES.filter(
+        return this.reaccionFacade.findAll().filter(
             (reaccion) => reaccion.getChollo().getId() === chollo.getId() && reaccion.getPositiva() === true
         ).length;
     }
-
+    // SELECT COUNT(*)
+    // FROM (reaccion
+    // INNER JOIN chollo ON reaccion.chollo = chollo.id)
+    // WHERE chollo.id=?
+    // AND reaccion.positiva=0;
     public getDislikesCountFor(chollo: Chollo){
-        return ReaccionFacade.REACCIONES.filter(
+        return this.reaccionFacade.findAll().filter(
             (reaccion) => reaccion.getChollo().getId() === chollo.getId() && reaccion.getPositiva() === false
         ).length;
     }

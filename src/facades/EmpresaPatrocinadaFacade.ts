@@ -1,34 +1,40 @@
-import { AbstractFacade } from "./AbstractFacade";
-import { Entity } from "../entities/Entity";
 import { EmpresaPatrocinada } from "../entities/empresaPatrocinada";
+import { Injectable } from "@angular/core";
+import { AbstractEntityFacade } from "./AbstractEntityFacade";
 
-export class EmpresaPatrocinadaFacade extends AbstractFacade{
+@Injectable()
+export class EmpresaPatrocinadaFacade extends AbstractEntityFacade{
 
     public static EMPRESAS_PATROCINADAS:EmpresaPatrocinada[] = [
-        new EmpresaPatrocinada(1,"Empresa 1"),
-        new EmpresaPatrocinada(2,"Empresa 2"), 
-        new EmpresaPatrocinada(3,"Empresa 3"),
+        new EmpresaPatrocinada("Empresa 1", 1),
+        new EmpresaPatrocinada("Empresa 2", 2), 
+        new EmpresaPatrocinada("Empresa 3", 3),
     ];
-    
-    public create(entity: EmpresaPatrocinada) {
-        EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS.push(entity);
+    // INSERT INTO empresaPatrocinada (nombre) VALUES (?);
+    public create(entity: EmpresaPatrocinada) { // INSERT + DEVOLVER ENTITY CON EL ULTIMO ID
+        this.findAll().push(entity); 
+        return entity;
     }
-    
-    public edit(entity: EmpresaPatrocinada) {
+    // UPDATE empresaPatrocinada SET nombre="?" WHERE id=?;
+    public edit(entity: EmpresaPatrocinada) { // EDIT
         var empresaPatrocinada: EmpresaPatrocinada = this.find(entity.getId());
         empresaPatrocinada.setNombre(entity.getNombre());
     }
-
-    public remove(entity: EmpresaPatrocinada) {
-        EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS = EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS.filter(
+    // DELETE FROM empresaPatrocinada WHERE id=?;
+    public remove(entity: EmpresaPatrocinada) { // DELETE
+        EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS = this.findAll().filter(
             (empresaPatrocinada) => empresaPatrocinada.getId() !== entity.getId()
         );
     }
-
+    // SELECT * FROM empresaPatrocinada WHERE id=?;
     public find(id: Number) {
-        return EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS.find(
+        return this.findAll().find(
             (empresaPatrocinada) => empresaPatrocinada.getId() === id 
         );
+    }
+    // SELECT * FROM empresaPatrocinada;
+    public findAll() {
+        return EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS;
     }
     
 }

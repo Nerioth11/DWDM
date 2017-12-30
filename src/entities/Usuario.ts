@@ -7,7 +7,7 @@ export class Usuario implements Entity{
     private telefono:String;
     private administrador:Boolean;
     
-    constructor(id:Number, alias:String, telefono:String, administrador:Boolean) {
+    constructor(alias:String, telefono:String, administrador:Boolean, id?:Number) {
       this.id = id;
       this.alias = alias;
       this.telefono = telefono;

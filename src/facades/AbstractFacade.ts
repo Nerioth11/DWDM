@@ -1,12 +1,5 @@
 import { Entity } from "../entities/Entity";
+import { Injectable } from "@angular/core";
 
-export abstract class AbstractFacade {
-
-    public abstract create(entity:Entity);
-
-    public abstract edit(entity:Entity);
-
-    public abstract remove(entity:Entity);
-
-    public abstract find(id:Number);
-}
+@Injectable()
+export abstract class AbstractFacade {}
