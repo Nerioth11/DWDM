@@ -8,41 +8,11 @@ import { ReaccionFacade } from "./ReaccionFacade";
 import { Categoria } from "../entities/Categoria";
 import { Injectable } from "@angular/core";
 import { AbstractEntityFacade } from "./AbstractEntityFacade";
+import { CHOLLOS } from "../db/db";
 
 @Injectable()
 export class CholloFacade extends AbstractEntityFacade{
     
-    public static CHOLLOS:Chollo[] = [
-        new Chollo(
-            "Chollo 1",
-            "http://enlace1.com",
-            "El chollo 1",
-            10.0,
-            5.0,
-            new Date(),
-            new Date(),
-            "EmpresaCualquiera",
-            null,
-            UsuarioFacade.USUARIOS[0],
-            CategoriaFacade.CATEGORIAS[0],
-            1
-        ),
-        new Chollo(
-            "Chollo 2",
-            "http://enlace2.com",
-            "El chollo 2",
-            100.0,
-            50.0,
-            new Date(),
-            new Date(),
-            null,
-            EmpresaPatrocinadaFacade.EMPRESAS_PATROCINADAS[0],
-            UsuarioFacade.USUARIOS[1],
-            CategoriaFacade.CATEGORIAS[1],
-            2
-        )      
-    ];
-
     constructor(private favoritoFacade:FavoritoFacade, private reaccionFacade:ReaccionFacade){ super(); }
     // INSERT INTO chollo (titulo,enlace,descripcion,precioAntes,precioDespues,fechaCreacion,fechaActualizacion,empresaNoPatrocinada,empresaPatrocinada,usuario,categoria) VALUES (?,?,?,?,?,?,?,?,?,?,?);
     public create(entity: Chollo) { // INSERT + DEVOLVER ENTITY CON EL ULTIMO ID
@@ -64,8 +34,10 @@ export class CholloFacade extends AbstractEntityFacade{
     }
     // DELETE FROM chollo WHERE id=?;
     public remove(entity: Chollo) { // DELETE
-        CholloFacade.CHOLLOS = this.findAll().filter(
-            (chollo) => chollo.getId() !== entity.getId()
+        CHOLLOS.forEach(
+            (chollo, index) => {
+                if (chollo.getId() === entity.getId()) CHOLLOS.splice(index, 1);
+            }
         );
 
         this.favoritoFacade.removeWithSave(entity);
@@ -82,7 +54,7 @@ export class CholloFacade extends AbstractEntityFacade{
     // WHERE chollo.id=?;
     public find(id: Number) {
         return this.findAll().find(
-            (chollo) => chollo.getId() === id 
+            (chollo) => chollo.getId() == id 
         );
     }
     // SELECT chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
@@ -94,7 +66,7 @@ export class CholloFacade extends AbstractEntityFacade{
     // INNER JOIN categoria ON chollo.categoria = categoria.id)
     // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada = empresaPatrocinada.id);
     public findAll() {
-        return CholloFacade.CHOLLOS;
+        return CHOLLOS;
     }
 
     // SELECT chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
@@ -128,7 +100,7 @@ export class CholloFacade extends AbstractEntityFacade{
 
     public findPopulars(){
         return this.findAll().sort(
-            (chollo1, chollo2) => (this.getLikesCountFor(chollo1) - this.getDislikesCountFor(chollo1)) - (this.getLikesCountFor(chollo2) - this.getDislikesCountFor(chollo2))
+            (chollo2, chollo1) => (this.getLikesCountFor(chollo1) - this.getDislikesCountFor(chollo1)) - (this.getLikesCountFor(chollo2) - this.getDislikesCountFor(chollo2))
         );
     }
 

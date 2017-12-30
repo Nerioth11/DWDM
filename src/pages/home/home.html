@@ -6,46 +6,46 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page2">
-  <ion-card>
-
+  <ion-card *ngFor="let chollo of chollos">
+    <div #id style="display: none;">{{chollo.getId()}}</div>
     <ion-item>
       <ion-avatar item-start>
         <img src="assets/img/W9n9fiZRTfWk2kqBr2Rw_photo_2017-12-11_12-26-08.jpg">
       </ion-avatar>
-      <h2>Marty McFly</h2>
-      <p>November 5, 1955</p>
+      <h2>{{chollo.getUsuario().getAlias()}}</h2>
+      <p>{{chollo.getFechaCreacion() | date: 'medium'}}</p>
     </ion-item>
 
-    <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg">
+    <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg" (click)="goToDetails(id.innerHTML)">
 
     <ion-card-content>
-      <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
+      <p>{{chollo.getDescripcion()}}</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>12 Likes</div>
+          <div><span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-down"></ion-icon>
-          <div>4 Dislikes</div>
+          <div #dislikes>{{cholloFacade.getDislikesCountFor(chollo)}} Dislikes</div>
         </button>
       </ion-col>
       <ion-col center text-center>
-        <ion-note>
+        <!-- <ion-note>
           11h ago
-        </ion-note>
+        </ion-note> -->
       </ion-col>
     </ion-row>
 
   </ion-card>
 
   <ion-fab bottom right #fab>
-    <button ion-fab>
+    <button ion-fab (click)="goToNewSale()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

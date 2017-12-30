@@ -6,14 +6,12 @@ import { Usuario } from "../entities/Usuario";
 import { Injectable } from "@angular/core";
 import { AbstractSaveUserRelationFacade } from "./AbstractSaveUserRelationFacade";
 import { SaveUserRelation } from "../entities/SaveUserRelation";
+import { REACCIONES } from "../db/db";
+
 
 @Injectable()
 export class ReaccionFacade extends AbstractSaveUserRelationFacade{
-    
-    public static REACCIONES:Reaccion[] = [
-        new Reaccion(CholloFacade.CHOLLOS[0], UsuarioFacade.USUARIOS[0], true),
-        new Reaccion(CholloFacade.CHOLLOS[1], UsuarioFacade.USUARIOS[0], false), 
-    ];
+ 
     // INSERT INTO reaccion (chollo,usuario,positiva) VALUES (?,?,?);
     public create(saveUserRelation:SaveUserRelation) { // INSERT
         this.findAll().push(saveUserRelation as Reaccion); 
@@ -24,8 +22,11 @@ export class ReaccionFacade extends AbstractSaveUserRelationFacade{
     }
     // DELETE FROM reaccion WHERE chollo=? AND usuario=?;
     public remove(saveUserRelation:SaveUserRelation) { // DELETE
-        ReaccionFacade.REACCIONES = this.findAll().filter(
-            (reaccion) => reaccion.getUsuario().getId() !== saveUserRelation.getUsuario().getId() || reaccion.getChollo().getId() !== saveUserRelation.getChollo().getId()
+        REACCIONES.forEach(
+            (reaccion, index) => {
+                if (reaccion.getUsuario().getId() === saveUserRelation.getUsuario().getId() && reaccion.getChollo().getId() !== saveUserRelation.getChollo().getId())
+                    REACCIONES.splice(index, 1);
+            }
         );
     }
     // SELECT reaccion.positiva,
@@ -46,13 +47,15 @@ export class ReaccionFacade extends AbstractSaveUserRelationFacade{
     }
     // SOBRA PARA LA BD
     public findAll() {
-        return ReaccionFacade.REACCIONES;
+        return REACCIONES;
     }
     // SOBRA PARA LA BD
     public removeWithSave(chollo:Chollo){
-        ReaccionFacade.REACCIONES = this.findAll().filter(
-            (reaccion) => reaccion.getChollo().getId() !== chollo.getId()
-        )
+        REACCIONES.forEach(
+            (reaccion, index) => {
+                if (reaccion.getChollo().getId() === chollo.getId()) REACCIONES.splice(index, 1);
+            }
+        );
     }
 
 }

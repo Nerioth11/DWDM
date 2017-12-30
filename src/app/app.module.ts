@@ -14,6 +14,12 @@ import { RegistroPage } from '../pages/registro/registro';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { FavoritoFacade } from '../facades/FavoritoFacade';
+import { ReaccionFacade } from '../facades/ReaccionFacade';
+import { UsuarioFacade } from '../facades/UsuarioFacade';
+import { CategoriaFacade } from '../facades/CategoriaFacade';
+import { CholloFacade } from '../facades/CholloFacade';
+import { EmpresaPatrocinadaFacade } from '../facades/EmpresaPatrocinadaFacade';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     RegistroPage
   ],
   providers: [
+    FavoritoFacade,
+    ReaccionFacade,
+    UsuarioFacade,
+    CategoriaFacade,
+    CholloFacade,
+    EmpresaPatrocinadaFacade,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

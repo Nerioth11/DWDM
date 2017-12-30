@@ -1,18 +1,28 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
+import { Chollo } from '../../entities/Chollo';
+import { CholloFacade } from '../../facades/CholloFacade';
 
 @Component({
   selector: 'page-popular',
   templateUrl: 'popular.html'
 })
 export class PopularPage {
-  // this tells the tabs component which Pages
-  // should be each tab's root Page
-  constructor(public navCtrl: NavController) {
+
+  chollos:Chollo[];
+
+  constructor(public navCtrl: NavController,
+              private cholloFacade: CholloFacade) {
+    this.getChollos();
   }
-  goToDetails(params){
-    if (!params) params = {};
-    this.navCtrl.push(DetailsPage);
+
+  goToDetails(idChollo){
+    this.navCtrl.push(DetailsPage, {idChollo: idChollo});
   }
+
+  getChollos(){
+    this.chollos = this.cholloFacade.findPopulars();
+  }
+
 }

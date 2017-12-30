@@ -12,8 +12,8 @@
 
   <div class="main-cnt">
     <img src="../assets/img/profile.jpg" class="dp">
-    <h1 text-center class="text">Guillermo</h1>
-    <p text-center class="text">Reputación: 24.700</p>
+    <h1 text-center class="text">{{usuario.getAlias()}}</h1>
+    <p text-center class="text">Reputación: {{usuarioFacade.getLikesOf(usuario)}} Likes {{usuarioFacade.getDislikesOf(usuario)}} Dislikes</p>
 
     <ion-segment [(ngModel)]="galleryType">
       <ion-segment-button value="regular">

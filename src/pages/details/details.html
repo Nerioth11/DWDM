@@ -4,9 +4,10 @@
       details
     </ion-title>
     <ion-buttons end>
-      <button ion-button>
+      <button ion-button (click)="goToNewSale(id.innerHTML)">
         Editar
       </button>
+      <div #id style="display: none">{{chollo.getId()}}</div>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -19,18 +20,12 @@
           <img src="assets/img/lXLk1u5ZTzSUBIDGdZIK_photo_2017-12-11_12-26-08.jpg" />
         </ion-avatar>
         <h2>
-          Autor del chollo - 98%
+          {{chollo.getUsuario().getAlias()}} - {{usuarioFacade.getLikesOf(chollo.getUsuario())}} Likes {{usuarioFacade.getDislikesOf(chollo.getUsuario())}} Dislikes
         </h2>
       </ion-item>
       <ion-item id="details-list-item-container11">
         <div id="details-markdown12" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">
-            Descripción
-            <strong>
-              completa
-            </strong>
-            del chollo
-          </p>
+          <p style="margin-top:0px;color:#000000;">{{chollo.getDescripcion()}}</p>
         </div>
       </ion-item>
       <ion-item color="none" id="details-list-item66">

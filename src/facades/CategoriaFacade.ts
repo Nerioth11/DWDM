@@ -1,15 +1,11 @@
 import { Categoria } from "../entities/Categoria";
 import { Injectable } from "@angular/core";
 import { AbstractEntityFacade } from "./AbstractEntityFacade";
+import { CATEGORIAS } from "../db/db";
 
 @Injectable()
 export class CategoriaFacade extends AbstractEntityFacade{
     
-    public static CATEGORIAS:Categoria[] = [
-        new Categoria("Categoría 1", 1),
-        new Categoria("Categoría 2", 2), 
-        new Categoria("Categoría 3", 3),
-    ];
     // INSERT INTO categoria (nombre) VALUES (?);
     public create(entity: Categoria) { // INSERT + DEVOLVER ENTITY CON EL ULTIMO ID
         this.findAll().push(entity); 
@@ -22,8 +18,10 @@ export class CategoriaFacade extends AbstractEntityFacade{
     }
     // DELETE FROM categoria WHERE id=?;
     public remove(entity: Categoria) { // DELETE
-        CategoriaFacade.CATEGORIAS = this.findAll().filter(
-            (categoria) => categoria.getId() !== entity.getId()
+        CATEGORIAS.forEach(
+            (categoria, index) => {
+                if (categoria.getId() === entity.getId()) CATEGORIAS.splice(index, 1);
+            }
         );
     }
     // SELECT * FROM categoria WHERE id=?;
@@ -34,7 +32,7 @@ export class CategoriaFacade extends AbstractEntityFacade{
     }
     // SELECT * FROM categoria;
     public findAll() {
-        return CategoriaFacade.CATEGORIAS;
+        return CATEGORIAS;
     }
     
 }

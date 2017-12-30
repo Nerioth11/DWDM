@@ -5,23 +5,22 @@ import { CholloFacade } from "./CholloFacade";
 import { Injectable } from "@angular/core";
 import { AbstractSaveUserRelationFacade } from "./AbstractSaveUserRelationFacade";
 import { SaveUserRelation } from "../entities/SaveUserRelation";
+import { FAVORITOS } from "../db/db";
 
 @Injectable()
 export class FavoritoFacade extends AbstractSaveUserRelationFacade{
     
-    public static FAVORITOS:Favorito[] = [
-        new Favorito(CholloFacade.CHOLLOS[0], UsuarioFacade.USUARIOS[0]),
-        new Favorito(CholloFacade.CHOLLOS[1], UsuarioFacade.USUARIOS[0])      
-    ];
-
     // INSERT INTO favorito (chollo,usuario) VALUES (?,?);
     public create(saveUserRelation:SaveUserRelation) { // INSERT
         this.findAll().push(saveUserRelation as Favorito); 
     }
     // DELETE FROM favorito WHERE chollo=? AND usuario=?;
     public remove(saveUserRelation:SaveUserRelation) { // DELETE
-        FavoritoFacade.FAVORITOS = this.findAll().filter(
-            (favorito) => favorito.getUsuario().getId() !== saveUserRelation.getUsuario().getId() || favorito.getChollo().getId() !== saveUserRelation.getChollo().getId()
+        FAVORITOS.forEach(
+            (favorito, index) => {
+                if (favorito.getUsuario().getId() === saveUserRelation.getUsuario().getId() && favorito.getChollo().getId() !== saveUserRelation.getChollo().getId())
+                    FAVORITOS.splice(index, 1);
+            }
         );
     }
     // SELECT usuario.id AS usuarioId,usuario.telefono,usuario.alias,usuario.administrador,
@@ -41,13 +40,15 @@ export class FavoritoFacade extends AbstractSaveUserRelationFacade{
     }
     // SOBRA PARA LA BD
     public findAll() {
-        return FavoritoFacade.FAVORITOS;
+        return FAVORITOS;
     }
     // SOBRA PARA LA BD
     public removeWithSave(chollo:Chollo){
-        FavoritoFacade.FAVORITOS = this.findAll().filter(
-            (favorito) => favorito.getChollo().getId() !== chollo.getId()
-        )
+        FAVORITOS.forEach(
+            (favorito, index) => {
+                if (favorito.getChollo().getId() === chollo.getId()) FAVORITOS.splice(index, 1);
+            }
+        );
     }
     
 }
