@@ -5,27 +5,36 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding id="page7">
-  <ion-segment [(ngModel)]="galleryType">
-    <ion-segment-button value="regular">
-      Regular
-    </ion-segment-button>
-    <ion-segment-button value="pinterest">
-      Pinterest
-    </ion-segment-button>
-  </ion-segment>
+<ion-content parallax>
+  <div class="bg">
 
-  <div [ngSwitch]="galleryType">
-    <!-- Responsive Layout with Ion Grid-->
-    <ion-grid *ngSwitchCase="'regular'">
-      <ion-row>
-        <ion-col col-6 col-md-4 col-xl-3 *ngFor="let image of [1,2,3,4,5,6,7,8,9,10]">
-          <div class="image-container" [style.background-image]="'url(assets/img/' + image + '.jpg)'">
-            <div class="card-title">Título</div>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  </div>
 
+  <div class="main-cnt">
+    <img src="../assets/img/profile.jpg" class="dp">
+    <h1 text-center class="text">Guillermo</h1>
+    <p text-center class="text">Reputación: 24.700</p>
+
+    <ion-segment [(ngModel)]="galleryType">
+      <ion-segment-button value="regular">
+        Mis chollos
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        Favoritos
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="galleryType">
+      <ion-grid *ngSwitchCase="'regular'">
+        <ion-row>
+          <ion-col col-6 col-md-4 col-xl-3 *ngFor="let image of [1,2,3,4,5,6,7,8,9,10]">
+            <div class="image-container" [style.background-image]="'url(assets/img/' + image + '.jpg)'">
+              <div class="card-title">Título</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
   </div>
 </ion-content>
