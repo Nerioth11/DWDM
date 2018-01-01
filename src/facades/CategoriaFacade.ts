@@ -27,7 +27,7 @@ export class CategoriaFacade extends AbstractEntityFacade{
     // SELECT * FROM categoria WHERE id=?;
     public find(id: Number) {
         return this.findAll().find(
-            (categoria) => categoria.getId() === id 
+            (categoria) => categoria.getId() == id 
         );
     }
     // SELECT * FROM categoria;

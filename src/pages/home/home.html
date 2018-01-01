@@ -19,18 +19,19 @@
     <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg" (click)="goToDetails(id.innerHTML)">
 
     <ion-card-content>
-      <p>{{chollo.getDescripcion()}}</p>
+      <h1>{{chollo.getTitulo()}}</h1>
+      <p>De {{chollo.getPrecioAntes()}}€ a {{chollo.getPrecioDespues()}}€</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button ion-button icon-left clear small (click)=addLikeTo(id.innerHTML)>
           <ion-icon name="thumbs-up"></ion-icon>
           <div><span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button ion-button icon-left clear small (click)=addDislikeTo(id.innerHTML)>
           <ion-icon name="thumbs-down"></ion-icon>
           <div #dislikes>{{cholloFacade.getDislikesCountFor(chollo)}} Dislikes</div>
         </button>

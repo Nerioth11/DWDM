@@ -26,7 +26,7 @@ export class EmpresaPatrocinadaFacade extends AbstractEntityFacade{
     // SELECT * FROM empresaPatrocinada WHERE id=?;
     public find(id: Number) {
         return this.findAll().find(
-            (empresaPatrocinada) => empresaPatrocinada.getId() === id 
+            (empresaPatrocinada) => empresaPatrocinada.getId() == id 
         );
     }
     // SELECT * FROM empresaPatrocinada;

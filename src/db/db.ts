@@ -16,6 +16,7 @@ export const CATEGORIAS:Categoria[] = [
 ];
 
 export const EMPRESAS_PATROCINADAS:EmpresaPatrocinada[] = [
+    new EmpresaPatrocinada("-", -1),
     new EmpresaPatrocinada("Empresa 1", 1),
     new EmpresaPatrocinada("Empresa 2", 2), 
     new EmpresaPatrocinada("Empresa 3", 3),
@@ -24,7 +25,8 @@ export const EMPRESAS_PATROCINADAS:EmpresaPatrocinada[] = [
 export const USUARIOS:Usuario[] = [
     new Usuario("Admin", "111111111", true, 1),
     new Usuario("Usuario 2", "222222222", false, 2), 
-    new Usuario("Usuario 3", "222222222", false, 3),
+    new Usuario("Usuario 3", "333333333", false, 3),
+    new Usuario("Usuario 5", "444444444", false, 4),
 ];
 
 export const CHOLLOS:Chollo[] = [
@@ -36,8 +38,8 @@ export const CHOLLOS:Chollo[] = [
         5.0,
         new Date(),
         new Date(),
-        "EmpresaCualquiera",
         null,
+        EMPRESAS_PATROCINADAS[1],
         USUARIOS[0],
         CATEGORIAS[0],
         1
@@ -50,8 +52,8 @@ export const CHOLLOS:Chollo[] = [
         50.0,
         new Date(),
         new Date(),
-        null,
-        EMPRESAS_PATROCINADAS[1],
+        "Empresa cualquiera",
+        EMPRESAS_PATROCINADAS[0],
         USUARIOS[1],
         CATEGORIAS[1],
         3
@@ -64,8 +66,8 @@ export const CHOLLOS:Chollo[] = [
         7.0,
         new Date(),
         new Date(),
-        "EmpresaCualquiera",
         null,
+        EMPRESAS_PATROCINADAS[2],
         USUARIOS[0],
         CATEGORIAS[0],
         2
@@ -74,7 +76,7 @@ export const CHOLLOS:Chollo[] = [
 
 export const FAVORITOS:Favorito[] = [
     new Favorito(CHOLLOS[0], USUARIOS[0]),
-    new Favorito(CHOLLOS[1], USUARIOS[0])      
+    new Favorito(CHOLLOS[1], USUARIOS[1])      
 ];
 
 export const REACCIONES:Reaccion[] = [

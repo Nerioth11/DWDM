@@ -4,7 +4,7 @@
       details
     </ion-title>
     <ion-buttons end>
-      <button ion-button (click)="goToNewSale(id.innerHTML)">
+      <button ion-button (click)="goToNewSale(id.innerHTML)" *ngIf="chollo.getUsuario().getId() == usuario.getId()">
         Editar
       </button>
       <div #id style="display: none">{{chollo.getId()}}</div>
@@ -25,14 +25,20 @@
       </ion-item>
       <ion-item id="details-list-item-container11">
         <div id="details-markdown12" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">{{chollo.getDescripcion()}}</p>
+          <h1>{{chollo.getTitulo()}}</h1>
+          <p>De {{chollo.getPrecioAntes()}}€ a {{chollo.getPrecioDespues()}}€</p>
+          <p>Descripcion: {{chollo.getDescripcion()}}</p>
+          <p>Empresa:  {{chollo.getUsuario().getAdministrador() ? chollo.getEmpresaPatrocinada().getNombre() : chollo.getEmpresaNoPatrocinada()}}</p>
         </div>
       </ion-item>
       <ion-item color="none" id="details-list-item66">
         <ion-icon name="share" item-left></ion-icon>
         Compartir
       </ion-item>
-      <button id="details-button4" ion-button color="assertive" full>
+      <button *ngIf="favorito == true" id="details-button4" ion-button color="assertive" full (click)="deleteFromFavourites(id.innerHTML)">
+        <ion-icon name="heart"></ion-icon>
+      </button>
+      <button *ngIf="favorito == false" id="details-button5" ion-button color="light" full  (click)="addToFavourites(id.innerHTML)">
         <ion-icon name="heart"></ion-icon>
       </button>
     </ion-list>

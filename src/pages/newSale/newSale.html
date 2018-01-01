@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Nuevo Chollo
+      {{chollo != null ? "Editar Chollo" : "Nuevo Chollo"}}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -11,49 +11,62 @@
       <ion-label>
         Titulo:
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input #titulo type="text" placeholder="" value="{{chollo != null ? chollo.getTitulo() : ''}}"></ion-input>
     </ion-item>
     <ion-item id="newSale-input3">
       <ion-label>
         Enlace:
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input #enlace type="text" placeholder="" value="{{chollo != null ? chollo.getEnlace() : ''}}"></ion-input>
     </ion-item>
     <ion-item id="newSale-input4">
       <ion-label>
         Descripción:
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input #descripcion type="text" placeholder="" value="{{chollo != null ? chollo.getDescripcion() : ''}}"></ion-input>
     </ion-item>
     <ion-item id="newSale-input5">
       <ion-label>
-        Precio antes:
+        Precio antes (€):
       </ion-label>
-      <ion-input type="number" placeholder=""></ion-input>
+      <ion-input #precioAntes type="number" placeholder="" value="{{chollo != null ? chollo.getPrecioAntes() : ''}}"></ion-input>
     </ion-item>
     <ion-item id="newSale-input6">
       <ion-label>
-        Precio después:
+        Precio después (€):
       </ion-label>
-      <ion-input type="number" placeholder=""></ion-input>
+      <ion-input #precioDespues type="number" placeholder="" value="{{chollo != null ? chollo.getPrecioDespues() : ''}}"></ion-input>
     </ion-item>
     <ion-item id="newSale-input7">
       <ion-label>
         Empresa:
       </ion-label>
-      <ion-input type="text" placeholder=""></ion-input>
+      <ion-input #empresaNoPatrocinada type="text" placeholder="" value="{{chollo != null ? chollo.getEmpresaNoPatrocinada() : ''}}"></ion-input>
     </ion-item>
     <ion-item id="newSale-toggle2">
       <ion-label>
-        Patrocinado
+        Empresa patrocinada
       </ion-label>
-      <ion-toggle color="dark" checked="false"></ion-toggle>
+      <ion-select #empresaPatrocinada color="dark" checked="false">
+        <ion-option value="{{empresaPatrocinada.getId()}}" *ngFor="let empresaPatrocinada of empresasPatrocinadas">{{empresaPatrocinada.getNombre()}}</ion-option>
+      </ion-select>
     </ion-item>
-    <button id="newSale-button11" ion-button color="assertive" block>
+    <ion-item id="newSale-toggle3">
+      <ion-label>
+        Categoría
+      </ion-label>
+      <ion-select #categoria color="dark" checked="false">
+        <ion-option value="{{categoria.getId()}}" *ngFor="let categoria of categorias">{{categoria.getNombre()}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <button id="newSale-button11" ion-button color="assertive" block *ngIf="idChollo != undefined" (click)="deleteSave()">
       Eliminar
     </button>
   </form>
-  <button id="newSale-button5" ion-button color="dark" block on-click="goToMiPerfil()">
+  <button id="newSale-button5" ion-button color="dark" block (click)="editSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)" *ngIf="chollo != null">
+    Editar
+  </button>
+  <button id="newSale-button6" ion-button color="dark" block (click)="createSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)" *ngIf="chollo == null">
     Publicar
   </button>
 </ion-content>

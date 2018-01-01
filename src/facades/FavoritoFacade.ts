@@ -18,7 +18,7 @@ export class FavoritoFacade extends AbstractSaveUserRelationFacade{
     public remove(saveUserRelation:SaveUserRelation) { // DELETE
         FAVORITOS.forEach(
             (favorito, index) => {
-                if (favorito.getUsuario().getId() === saveUserRelation.getUsuario().getId() && favorito.getChollo().getId() !== saveUserRelation.getChollo().getId())
+                if (favorito.getUsuario().getId() == saveUserRelation.getUsuario().getId() && favorito.getChollo().getId() == saveUserRelation.getChollo().getId())
                     FAVORITOS.splice(index, 1);
             }
         );
@@ -35,7 +35,7 @@ export class FavoritoFacade extends AbstractSaveUserRelationFacade{
     // WHERE favorito.chollo=? AND favorito.usuario=?;
     public find(saveUserRelation:SaveUserRelation) {
         return this.findAll().find(
-            (favorito) => favorito.getUsuario().getId() === saveUserRelation.getUsuario().getId() && favorito.getChollo().getId() === saveUserRelation.getChollo().getId()
+            (favorito) => favorito.getUsuario().getId() == saveUserRelation.getUsuario().getId() && favorito.getChollo().getId() == saveUserRelation.getChollo().getId()
         );
     }
     // SOBRA PARA LA BD

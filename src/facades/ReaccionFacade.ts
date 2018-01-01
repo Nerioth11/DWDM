@@ -24,7 +24,7 @@ export class ReaccionFacade extends AbstractSaveUserRelationFacade{
     public remove(saveUserRelation:SaveUserRelation) { // DELETE
         REACCIONES.forEach(
             (reaccion, index) => {
-                if (reaccion.getUsuario().getId() === saveUserRelation.getUsuario().getId() && reaccion.getChollo().getId() !== saveUserRelation.getChollo().getId())
+                if (reaccion.getUsuario().getId() == saveUserRelation.getUsuario().getId() && reaccion.getChollo().getId() == saveUserRelation.getChollo().getId())
                     REACCIONES.splice(index, 1);
             }
         );
@@ -39,10 +39,12 @@ export class ReaccionFacade extends AbstractSaveUserRelationFacade{
     // INNER JOIN chollo ON reaccion.chollo = chollo.id)
     // INNER JOIN categoria ON chollo.categoria = categoria.id)
     // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada= empresaPatrocinada.id)
-    // WHERE reaccion.chollo=? AND reaccion.usuario=?;
+    // WHERE reaccion.chollo=? AND reaccion.usuario=? AND reaccion.positiva=?;
     public find(saveUserRelation: Reaccion) {
         return this.findAll().find(
-            (reaccion) => reaccion.getUsuario().getId() === saveUserRelation.getUsuario().getId() && reaccion.getChollo().getId() === saveUserRelation.getChollo().getId()
+            (reaccion) => 
+                reaccion.getUsuario().getId() == saveUserRelation.getUsuario().getId() && 
+                reaccion.getChollo().getId() == saveUserRelation.getChollo().getId()
         );
     }
     // SOBRA PARA LA BD

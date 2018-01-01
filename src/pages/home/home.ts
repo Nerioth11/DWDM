@@ -36,8 +36,20 @@ export class HomePage {
     this.chollos = this.cholloFacade.findAll();
   }
 
-  // addLikeTo(html: HTMLSpanElement, chollo:Chollo){
-  //   this.reaccionFacade.create(new Reaccion(chollo, USUARIOS[0], true));
-  // }
+  addLikeTo(cholloId:String){
+    var chollo = (this.cholloFacade.find(Number(cholloId)));
+    var reaccion = new Reaccion(chollo, USUARIOS[0], true);
+    if(this.reaccionFacade.find(reaccion) != null && this.reaccionFacade.find(reaccion).getPositiva()) return;
+    this.reaccionFacade.remove(reaccion);
+    this.reaccionFacade.create(reaccion);
+  }
+
+  addDislikeTo(cholloId:String){
+    var chollo = (this.cholloFacade.find(Number(cholloId)));
+    var reaccion = new Reaccion(chollo, USUARIOS[0], false);
+    if(this.reaccionFacade.find(reaccion) != null && !this.reaccionFacade.find(reaccion).getPositiva()) return;
+    this.reaccionFacade.remove(reaccion);
+    this.reaccionFacade.create(reaccion);
+  }
 
 }

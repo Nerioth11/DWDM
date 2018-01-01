@@ -14,14 +14,17 @@ export class PopularPage {
 
   constructor(public navCtrl: NavController,
               private cholloFacade: CholloFacade) {
-    this.getChollos();
   }
+  
+  ionViewWillEnter() {
+    this.getPopulars();
+}
 
   goToDetails(idChollo){
     this.navCtrl.push(DetailsPage, {idChollo: idChollo});
   }
 
-  getChollos(){
+  getPopulars(){
     this.chollos = this.cholloFacade.findPopulars();
   }
 
