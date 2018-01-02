@@ -9,7 +9,7 @@ import { DetailsPage } from '../pages/details/details';
 import { newSalePage } from '../pages/newSale/newSale';
 import { myProfilePage } from '../pages/myProfile/myProfile';
 import { LoginPage } from '../pages/login/login';
-import { RegistroPage } from '../pages/registro/registro';
+import { SignupPage } from '../pages/signup/signup';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,7 +33,7 @@ import { UserService } from '../services/UserService';
     newSalePage,
     myProfilePage,
     LoginPage,
-    RegistroPage
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +49,7 @@ import { UserService } from '../services/UserService';
     newSalePage,
     myProfilePage,
     LoginPage,
-    RegistroPage
+    SignupPage
   ],
   providers: [
     UserService,

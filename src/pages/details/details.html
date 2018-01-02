@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      details
+      {{chollo.getTitulo()}}
     </ion-title>
     <ion-buttons end>
       <button ion-button (click)="goToNewSale(chollo.getId())" *ngIf="chollo.getUsuario().getId() == usuario.getId()">
@@ -19,7 +19,8 @@
           <img src="assets/img/lXLk1u5ZTzSUBIDGdZIK_photo_2017-12-11_12-26-08.jpg" />
         </ion-avatar>
         <h2>
-          {{chollo.getUsuario().getAlias()}} - {{usuarioFacade.getLikesOf(chollo.getUsuario())}} Likes {{usuarioFacade.getDislikesOf(chollo.getUsuario())}} Dislikes
+          {{chollo.getUsuario().getAlias()}} - {{usuarioFacade.getLikesOf(chollo.getUsuario())}} Likes {{usuarioFacade.getDislikesOf(chollo.getUsuario())}}
+          Dislikes
         </h2>
       </ion-item>
       <ion-item id="details-list-item-container11">
@@ -36,30 +37,28 @@
         Compartir
       </ion-item>
       <ion-row>
-          <ion-col>
-            <button ion-button icon-left clear small (click)="addLikeTo(chollo.getId())">
-              <ion-icon name="thumbs-up"></ion-icon>
-              <div><span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
-            </button>
-          </ion-col>
-          <ion-col>
-            <button ion-button icon-left clear small (click)="addDislikeTo(chollo.getId())">
-              <ion-icon name="thumbs-down"></ion-icon>
-              <div #dislikes>{{cholloFacade.getDislikesCountFor(chollo)}} Dislikes</div>
-            </button>
-          </ion-col>
-          <ion-col center text-center>
-            <!-- <ion-note>
-              11h ago
-            </ion-note> -->
-          </ion-col>
-        </ion-row>
-      <button *ngIf="favorito == true" id="details-button4" ion-button color="assertive" full (click)="deleteFromFavourites(chollo.getId())">
-        <ion-icon name="heart"></ion-icon>
-      </button>
-      <button *ngIf="favorito == false" id="details-button5" ion-button color="light" full  (click)="addToFavourites(chollo.getId())">
-        <ion-icon name="heart"></ion-icon>
-      </button>
+        <button *ngIf="favorito == false" id="details-button5" ion-button color="light" full (click)="addToFavourites(chollo.getId())">
+          <ion-icon name="heart"></ion-icon>
+        </button>
+        <button *ngIf="favorito == true" id="details-button4" ion-button color="assertive" full (click)="deleteFromFavourites(chollo.getId())">
+          <ion-icon name="heart"></ion-icon>
+        </button>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small (click)="addLikeTo(chollo.getId())">
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>
+              <span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small (click)="addDislikeTo(chollo.getId())">
+            <ion-icon name="thumbs-down"></ion-icon>
+            <div #dislikes>{{cholloFacade.getDislikesCountFor(chollo)}} Dislikes</div>
+          </button>
+        </ion-col>
+      </ion-row>
     </ion-list>
   </ion-card>
 </ion-content>

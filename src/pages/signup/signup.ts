@@ -4,10 +4,10 @@ import { HomePage } from '../home/home';
 import { DetailsPage } from '../details/details';
 
 @Component({
-  selector: 'page-registro',
-  templateUrl: 'registro.html'
+  selector: 'page-signup',
+  templateUrl: 'signup.html'
 })
-export class RegistroPage {
+export class SignupPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
   constructor(public navCtrl: NavController) {

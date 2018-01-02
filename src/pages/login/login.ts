@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { DetailsPage } from '../details/details';
-import { RegistroPage } from '../registro/registro';
+import { SignupPage } from '../signup/signup';
 
 @Component({
   selector: 'page-login',
@@ -19,8 +19,8 @@ export class LoginPage {
   }goToDetails(params){
     if (!params) params = {};
     this.navCtrl.push(DetailsPage);
-  }goToRegistro(params){
+  }goToSignup(params){
     if (!params) params = {};
-    this.navCtrl.push(RegistroPage);
+    this.navCtrl.push(SignupPage);
   }
 }

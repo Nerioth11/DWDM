@@ -68,4 +68,13 @@ export class HomePage {
     this.categorias = this.categoriaFacade.findAll();
   }
 
+  filterSales(ev: any) {
+    this.getChollos();
+    let val = ev.target.value;
+    if (val && val.trim() != '') {
+      this.chollos = this.chollos.filter((chollo) => {
+        return (chollo.getTitulo().toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
 }
