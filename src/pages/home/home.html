@@ -7,7 +7,6 @@
 </ion-header>
 <ion-content padding id="page2">
   <ion-card *ngFor="let chollo of chollos">
-    <div #id style="display: none;">{{chollo.getId()}}</div>
     <ion-item>
       <ion-avatar item-start>
         <img src="assets/img/W9n9fiZRTfWk2kqBr2Rw_photo_2017-12-11_12-26-08.jpg">
@@ -16,7 +15,7 @@
       <p>{{chollo.getFechaCreacion() | date: 'medium'}}</p>
     </ion-item>
 
-    <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg" (click)="goToDetails(id.innerHTML)">
+    <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg" (click)="goToDetails(chollo.getId())">
 
     <ion-card-content>
       <h1>{{chollo.getTitulo()}}</h1>
@@ -25,13 +24,13 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small (click)=addLikeTo(id.innerHTML)>
+        <button ion-button icon-left clear small (click)="addLikeTo(chollo.getId())">
           <ion-icon name="thumbs-up"></ion-icon>
           <div><span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small (click)=addDislikeTo(id.innerHTML)>
+        <button ion-button icon-left clear small (click)="addDislikeTo(chollo.getId())">
           <ion-icon name="thumbs-down"></ion-icon>
           <div #dislikes>{{cholloFacade.getDislikesCountFor(chollo)}} Dislikes</div>
         </button>

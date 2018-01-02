@@ -80,7 +80,7 @@ export class CholloFacade extends AbstractEntityFacade{
     // WHERE chollo.usuario=?;
     public findByUser(user: Usuario){
         return this.findAll().filter(
-            (chollo) => chollo.getUsuario().getId() === user.getId() 
+            (chollo) => chollo.getUsuario().getId() == user.getId() 
         );
     }
     // SELECT chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
@@ -94,7 +94,7 @@ export class CholloFacade extends AbstractEntityFacade{
     // WHERE chollo.categoria=?;
     public findByCategory(categoria:Categoria){
         return this.findAll().filter(
-            (chollo) => chollo.getCategoria().getId() === categoria.getId() 
+            (chollo) => chollo.getCategoria().getId() == categoria.getId() 
         );
     }
 
@@ -115,7 +115,7 @@ export class CholloFacade extends AbstractEntityFacade{
     // WHERE favorito.usuario=?;
     public findFavouritesByUser(user: Usuario){
         return this.favoritoFacade.findAll().filter(
-            (favorito) => favorito.getUsuario().getId() === user.getId() 
+            (favorito) => favorito.getUsuario().getId() == user.getId() 
         ).map(
             (favorito) => favorito.getChollo()
         );
@@ -127,7 +127,7 @@ export class CholloFacade extends AbstractEntityFacade{
     // AND reaccion.positiva=1;
     public getLikesCountFor(chollo: Chollo){
         return this.reaccionFacade.findAll().filter(
-            (reaccion) => reaccion.getChollo().getId() === chollo.getId() && reaccion.getPositiva() === true
+            (reaccion) => reaccion.getChollo().getId() == chollo.getId() && reaccion.getPositiva() == true
         ).length;
     }
     // SELECT COUNT(*)
@@ -137,7 +137,7 @@ export class CholloFacade extends AbstractEntityFacade{
     // AND reaccion.positiva=0;
     public getDislikesCountFor(chollo: Chollo){
         return this.reaccionFacade.findAll().filter(
-            (reaccion) => reaccion.getChollo().getId() === chollo.getId() && reaccion.getPositiva() === false
+            (reaccion) => reaccion.getChollo().getId() == chollo.getId() && reaccion.getPositiva() == false
         ).length;
     }
     

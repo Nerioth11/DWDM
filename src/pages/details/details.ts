@@ -9,6 +9,8 @@ import { Usuario } from '../../entities/Usuario';
 import { USUARIOS } from '../../db/db';
 import { FavoritoFacade } from '../../facades/FavoritoFacade';
 import { Favorito } from '../../entities/Favorito';
+import { ReaccionFacade } from '../../facades/ReaccionFacade';
+import { Reaccion } from '../../entities/Reaccion';
 
 @Component({
   selector: 'page-details',
@@ -24,7 +26,8 @@ export class DetailsPage {
               public navParams: NavParams,
               private cholloFacade: CholloFacade,
               private usuarioFacade: UsuarioFacade,
-              private favoritoFacade: FavoritoFacade) {
+              private favoritoFacade: FavoritoFacade,
+              private reaccionFacade: ReaccionFacade) {
     this.chollo = this.cholloFacade.find(navParams.get("idChollo"));
     this.usuario = USUARIOS[0];
     this.favorito = this.getFavorito();
@@ -47,6 +50,22 @@ export class DetailsPage {
   deleteFromFavourites(){
     this.favoritoFacade.remove(new Favorito(this.chollo, this.usuario));
     this.favorito = false;
+  }
+
+  addLikeTo(cholloId:String){
+    var chollo = (this.cholloFacade.find(Number(cholloId)));
+    var reaccion = new Reaccion(chollo, USUARIOS[0], true);
+    if(this.reaccionFacade.find(reaccion) != null && this.reaccionFacade.find(reaccion).getPositiva()) return;
+    this.reaccionFacade.remove(reaccion);
+    this.reaccionFacade.create(reaccion);
+  }
+
+  addDislikeTo(cholloId:String){
+    var chollo = (this.cholloFacade.find(Number(cholloId)));
+    var reaccion = new Reaccion(chollo, USUARIOS[0], false);
+    if(this.reaccionFacade.find(reaccion) != null && !this.reaccionFacade.find(reaccion).getPositiva()) return;
+    this.reaccionFacade.remove(reaccion);
+    this.reaccionFacade.create(reaccion);
   }
   
 }

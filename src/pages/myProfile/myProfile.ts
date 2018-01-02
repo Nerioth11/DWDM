@@ -6,6 +6,7 @@ import { CholloFacade } from '../../facades/CholloFacade';
 import { Usuario } from '../../entities/Usuario';
 import { USUARIOS } from '../../db/db';
 import { UsuarioFacade } from '../../facades/UsuarioFacade';
+import { Chollo } from '../../entities/Chollo';
 
 @Component({
   selector: 'page-myProfile',
@@ -15,6 +16,8 @@ export class myProfilePage {
 
   usuario: Usuario;
   galleryType:String ='regular';
+  chollos: Chollo[];
+  favoritos: Chollo[];
 
   constructor(public navCtrl: NavController,
               private cholloFacade: CholloFacade,
@@ -22,14 +25,18 @@ export class myProfilePage {
     this.usuario = USUARIOS[0];
   }
 
-  goTopopular(params){
+  ionViewWillEnter() {
+    this.chollos = this.cholloFacade.findByUser(this.usuario);
+    this.favoritos = this.cholloFacade.findFavouritesByUser(this.usuario);
+  }
+
+  goToPopular(params){
     if (!params) params = {};
     this.navCtrl.push(PopularPage);
 
   }
-  
-  goToDetails(params){
-    if (!params) params = {};
-    this.navCtrl.push(DetailsPage);
+
+  goToDetails(idChollo){
+    this.navCtrl.push(DetailsPage, {idChollo: idChollo});
   }
 }

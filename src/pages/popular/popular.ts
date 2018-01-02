@@ -18,7 +18,7 @@ export class PopularPage {
   
   ionViewWillEnter() {
     this.getPopulars();
-}
+  }
 
   goToDetails(idChollo){
     this.navCtrl.push(DetailsPage, {idChollo: idChollo});

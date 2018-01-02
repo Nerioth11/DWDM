@@ -4,10 +4,9 @@
       details
     </ion-title>
     <ion-buttons end>
-      <button ion-button (click)="goToNewSale(id.innerHTML)" *ngIf="chollo.getUsuario().getId() == usuario.getId()">
+      <button ion-button (click)="goToNewSale(chollo.getId())" *ngIf="chollo.getUsuario().getId() == usuario.getId()">
         Editar
       </button>
-      <div #id style="display: none">{{chollo.getId()}}</div>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -35,10 +34,29 @@
         <ion-icon name="share" item-left></ion-icon>
         Compartir
       </ion-item>
-      <button *ngIf="favorito == true" id="details-button4" ion-button color="assertive" full (click)="deleteFromFavourites(id.innerHTML)">
+      <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small (click)="addLikeTo(chollo.getId())">
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div><span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small (click)="addDislikeTo(chollo.getId())">
+              <ion-icon name="thumbs-down"></ion-icon>
+              <div #dislikes>{{cholloFacade.getDislikesCountFor(chollo)}} Dislikes</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <!-- <ion-note>
+              11h ago
+            </ion-note> -->
+          </ion-col>
+        </ion-row>
+      <button *ngIf="favorito == true" id="details-button4" ion-button color="assertive" full (click)="deleteFromFavourites(chollo.getId())">
         <ion-icon name="heart"></ion-icon>
       </button>
-      <button *ngIf="favorito == false" id="details-button5" ion-button color="light" full  (click)="addToFavourites(id.innerHTML)">
+      <button *ngIf="favorito == false" id="details-button5" ion-button color="light" full  (click)="addToFavourites(chollo.getId())">
         <ion-icon name="heart"></ion-icon>
       </button>
     </ion-list>
