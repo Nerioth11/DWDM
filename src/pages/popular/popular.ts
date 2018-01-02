@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
 import { Chollo } from '../../entities/Chollo';
 import { CholloFacade } from '../../facades/CholloFacade';
+import { CategoryService } from '../../services/CategoryService';
 
 @Component({
   selector: 'page-popular',
@@ -13,11 +14,13 @@ export class PopularPage {
   chollos:Chollo[];
 
   constructor(public navCtrl: NavController,
-              private cholloFacade: CholloFacade) {
+              private cholloFacade: CholloFacade,
+              private categoryService: CategoryService) {
   }
   
   ionViewWillEnter() {
     this.getPopulars();
+    this.categoryService.setCategoryId(-1);
   }
 
   goToDetails(idChollo){

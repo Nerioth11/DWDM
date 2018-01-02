@@ -20,6 +20,8 @@ import { UsuarioFacade } from '../facades/UsuarioFacade';
 import { CategoriaFacade } from '../facades/CategoriaFacade';
 import { CholloFacade } from '../facades/CholloFacade';
 import { EmpresaPatrocinadaFacade } from '../facades/EmpresaPatrocinadaFacade';
+import { CategoryService } from '../services/CategoryService';
+import { UserService } from '../services/UserService';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { EmpresaPatrocinadaFacade } from '../facades/EmpresaPatrocinadaFacade';
     RegistroPage
   ],
   providers: [
+    UserService,
+    CategoryService,
     FavoritoFacade,
     ReaccionFacade,
     UsuarioFacade,

@@ -47,7 +47,7 @@
       <ion-label>
         Empresa patrocinada
       </ion-label>
-      <ion-select #empresaPatrocinada color="dark" checked="false">
+      <ion-select #empresaPatrocinada color="dark" checked="false" [(ngModel)]="empresaPatrocinadaActual" [ngModelOptions]="{standalone: true}">
         <ion-option value="{{empresaPatrocinada.getId()}}" *ngFor="let empresaPatrocinada of empresasPatrocinadas">{{empresaPatrocinada.getNombre()}}</ion-option>
       </ion-select>
     </ion-item>
@@ -55,7 +55,7 @@
       <ion-label>
         Categoría
       </ion-label>
-      <ion-select #categoria color="dark" checked="false">
+      <ion-select #categoria color="dark" checked="false" [(ngModel)]="categoriaActual" [ngModelOptions]="{standalone: true}">
         <ion-option value="{{categoria.getId()}}" *ngFor="let categoria of categorias">{{categoria.getNombre()}}</ion-option>
       </ion-select>
     </ion-item>

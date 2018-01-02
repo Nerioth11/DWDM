@@ -12,6 +12,7 @@ import { USUARIOS } from '../../db/db';
 import { HomePage } from '../home/home';
 import { CategoriaFacade } from '../../facades/CategoriaFacade';
 import { Categoria } from '../../entities/Categoria';
+import { UserService } from '../../services/UserService';
 
 @Component({
   selector: 'page-newSale',
@@ -24,20 +25,25 @@ export class newSalePage {
   empresasPatrocinadas:EmpresaPatrocinada[];
   categorias:Categoria[];
   usuario:Usuario;
+  empresaPatrocinadaActual:Number;
+  categoriaActual:Number;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private cholloFacade: CholloFacade,
               private empresaPatrocinadaFacade: EmpresaPatrocinadaFacade,
               private categoriaFacade: CategoriaFacade,
-              private usuarioFacade: UsuarioFacade) {
+              private usuarioFacade: UsuarioFacade,
+              private userService: UserService) {
 
     this.idChollo =  navParams.get("idChollo");
-    this.usuario = USUARIOS[0];
+    this.usuario = this.userService.getUser();
     this.loadCompanies();
     this.loadCategories();
     if(this.idChollo == undefined) return;
     this.loadSaveInfo();
+    this.empresaPatrocinadaActual = this.usuario.getAdministrador()? this.chollo.getEmpresaPatrocinada().getId() : -1;
+    this.categoriaActual = this.chollo.getCategoria().getId();
   }
   
   goToNewSale(params){
@@ -80,7 +86,9 @@ export class newSalePage {
     this.chollo.setPrecioDespues(precioDespues);
     this.chollo.setFechaActualizacion(new Date());
     this.chollo.setEmpresaNoPatrocinada(empresaNoPatrocinada);
-    this.chollo.setEmpresaPatrocinada(this.empresaPatrocinadaFacade.find(empresaPatrocinada));
+    this.chollo.setEmpresaPatrocinada(
+      this.usuario.getAdministrador() ? this.empresaPatrocinadaFacade.find(empresaPatrocinada) : new EmpresaPatrocinada("-", -1)
+    );
     this.chollo.setCategoria(this.categoriaFacade.find(categoria));
     this.cholloFacade.edit(this.chollo);
     this.goToHome();
@@ -96,10 +104,10 @@ export class newSalePage {
       new Date(),
       new Date(), 
       empresaNoPatrocinada, 
-      this.empresaPatrocinadaFacade.find(empresaPatrocinada), 
+      this.usuario.getAdministrador() ? this.empresaPatrocinadaFacade.find(empresaPatrocinada) : new EmpresaPatrocinada("-", -1),
       this.usuario, 
       this.categoriaFacade.find(categoria), 
-      (Math.random() * 1000000) + 1
+      Math.trunc((Math.random() * 1000) + 1)
     )
     this.cholloFacade.create(newSave);
     this.goToHome();

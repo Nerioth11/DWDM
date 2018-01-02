@@ -10,6 +10,8 @@ import { USUARIOS } from '../../db/db';
 import { newSalePage } from '../newSale/newSale';
 import { Categoria } from '../../entities/Categoria';
 import { CategoriaFacade } from '../../facades/CategoriaFacade';
+import { CategoryService } from '../../services/CategoryService';
+import { UserService } from '../../services/UserService';
 
 @Component({
   selector: 'page-Home',
@@ -23,10 +25,15 @@ export class HomePage {
   constructor(public navCtrl: NavController,
               private cholloFacade: CholloFacade,
               private categoriaFacade: CategoriaFacade,
-              private reaccionFacade: ReaccionFacade
-             ) {
-    this.getChollos();
+              private reaccionFacade: ReaccionFacade,
+              private categoryService: CategoryService,
+              private userService: UserService) {
     this.loadCategories();
+  }
+
+  ionViewWillEnter() {
+    this.getChollos();
+    this.categoryService.setCategoryId(-1);
   }
 
   goToDetails(idChollo){
@@ -43,7 +50,7 @@ export class HomePage {
 
   addLikeTo(cholloId:String){
     var chollo = (this.cholloFacade.find(Number(cholloId)));
-    var reaccion = new Reaccion(chollo, USUARIOS[0], true);
+    var reaccion = new Reaccion(chollo, this.userService.getUser(), true);
     if(this.reaccionFacade.find(reaccion) != null && this.reaccionFacade.find(reaccion).getPositiva()) return;
     this.reaccionFacade.remove(reaccion);
     this.reaccionFacade.create(reaccion);
@@ -51,7 +58,7 @@ export class HomePage {
 
   addDislikeTo(cholloId:String){
     var chollo = (this.cholloFacade.find(Number(cholloId)));
-    var reaccion = new Reaccion(chollo, USUARIOS[0], false);
+    var reaccion = new Reaccion(chollo, this.userService.getUser(), false);
     if(this.reaccionFacade.find(reaccion) != null && !this.reaccionFacade.find(reaccion).getPositiva()) return;
     this.reaccionFacade.remove(reaccion);
     this.reaccionFacade.create(reaccion);

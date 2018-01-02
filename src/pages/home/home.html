@@ -12,7 +12,7 @@
 
 </ion-header>
 <ion-content padding id="page2">
-  <ion-card *ngFor="let chollo of chollos">
+  <ion-card *ngFor="let chollo of chollos" [hidden]="categoryService.getCategoryId() > -1 && categoryService.getCategoryId() != chollo.getCategoria().getId()">
     <ion-item>
       <ion-avatar item-start>
         <img src="assets/img/W9n9fiZRTfWk2kqBr2Rw_photo_2017-12-11_12-26-08.jpg">

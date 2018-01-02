@@ -12,7 +12,7 @@ import { Usuario } from "../entities/Usuario";
 export const CATEGORIAS:Categoria[] = [
     new Categoria("Categoría 1", 1),
     new Categoria("Categoría 2", 2), 
-    new Categoria("Categoría 3", 3),
+    new Categoria("Otros", 3),
 ];
 
 export const EMPRESAS_PATROCINADAS:EmpresaPatrocinada[] = [
@@ -69,7 +69,7 @@ export const CHOLLOS:Chollo[] = [
         null,
         EMPRESAS_PATROCINADAS[2],
         USUARIOS[0],
-        CATEGORIAS[0],
+        CATEGORIAS[2],
         2
     )    
 ];

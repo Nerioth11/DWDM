@@ -27,7 +27,8 @@
           <h1>{{chollo.getTitulo()}}</h1>
           <p>De {{chollo.getPrecioAntes()}}€ a {{chollo.getPrecioDespues()}}€</p>
           <p>Descripcion: {{chollo.getDescripcion()}}</p>
-          <p>Empresa:  {{chollo.getUsuario().getAdministrador() ? chollo.getEmpresaPatrocinada().getNombre() : chollo.getEmpresaNoPatrocinada()}}</p>
+          <p>Empresa: {{chollo.getUsuario().getAdministrador() ? chollo.getEmpresaPatrocinada().getNombre() : chollo.getEmpresaNoPatrocinada()}}</p>
+          <p>Categoria: {{chollo.getCategoria().getNombre()}}</p>
         </div>
       </ion-item>
       <ion-item color="none" id="details-list-item66">

@@ -11,6 +11,7 @@ import { FavoritoFacade } from '../../facades/FavoritoFacade';
 import { Favorito } from '../../entities/Favorito';
 import { ReaccionFacade } from '../../facades/ReaccionFacade';
 import { Reaccion } from '../../entities/Reaccion';
+import { UserService } from '../../services/UserService';
 
 @Component({
   selector: 'page-details',
@@ -27,9 +28,10 @@ export class DetailsPage {
               private cholloFacade: CholloFacade,
               private usuarioFacade: UsuarioFacade,
               private favoritoFacade: FavoritoFacade,
-              private reaccionFacade: ReaccionFacade) {
+              private reaccionFacade: ReaccionFacade,
+              private userService: UserService) {
     this.chollo = this.cholloFacade.find(navParams.get("idChollo"));
-    this.usuario = USUARIOS[0];
+    this.usuario = this.userService.getUser();
     this.favorito = this.getFavorito();
   }
 
@@ -38,7 +40,6 @@ export class DetailsPage {
   }
 
   getFavorito() {
-    // alert("FAVORITO: " + this.favoritoFacade.find(new Favorito(this.chollo, this.usuario)));
     return this.favoritoFacade.find(new Favorito(this.chollo, this.usuario)) != null;
   }
 
@@ -54,7 +55,7 @@ export class DetailsPage {
 
   addLikeTo(cholloId:String){
     var chollo = (this.cholloFacade.find(Number(cholloId)));
-    var reaccion = new Reaccion(chollo, USUARIOS[0], true);
+    var reaccion = new Reaccion(chollo, this.userService.getUser(), true);
     if(this.reaccionFacade.find(reaccion) != null && this.reaccionFacade.find(reaccion).getPositiva()) return;
     this.reaccionFacade.remove(reaccion);
     this.reaccionFacade.create(reaccion);
@@ -62,7 +63,7 @@ export class DetailsPage {
 
   addDislikeTo(cholloId:String){
     var chollo = (this.cholloFacade.find(Number(cholloId)));
-    var reaccion = new Reaccion(chollo, USUARIOS[0], false);
+    var reaccion = new Reaccion(chollo, this.userService.getUser(), false);
     if(this.reaccionFacade.find(reaccion) != null && !this.reaccionFacade.find(reaccion).getPositiva()) return;
     this.reaccionFacade.remove(reaccion);
     this.reaccionFacade.create(reaccion);

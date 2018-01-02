@@ -7,6 +7,7 @@ import { Usuario } from '../../entities/Usuario';
 import { USUARIOS } from '../../db/db';
 import { UsuarioFacade } from '../../facades/UsuarioFacade';
 import { Chollo } from '../../entities/Chollo';
+import { UserService } from '../../services/UserService';
 
 @Component({
   selector: 'page-myProfile',
@@ -21,8 +22,9 @@ export class myProfilePage {
 
   constructor(public navCtrl: NavController,
               private cholloFacade: CholloFacade,
-              private usuarioFacade: UsuarioFacade) {
-    this.usuario = USUARIOS[0];
+              private usuarioFacade: UsuarioFacade,
+              private userService: UserService) {
+    this.usuario = this.userService.getUser();
   }
 
   ionViewWillEnter() {

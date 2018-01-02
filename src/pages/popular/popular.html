@@ -1,5 +1,10 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
     <ion-title>
       Populares
     </ion-title>
@@ -7,7 +12,7 @@
 </ion-header>
 <ion-content padding id="page3">
   <ion-list>
-  <ion-item *ngFor="let chollo of chollos" (click)="goToDetails(chollo.getId())">
+  <ion-item *ngFor="let chollo of chollos" (click)="goToDetails(chollo.getId())"  [hidden]="categoryService.getCategoryId() > -1 && categoryService.getCategoryId() != chollo.getCategoria().getId()">
     <ion-thumbnail item-start>
       <img src="assets/img/W9n9fiZRTfWk2kqBr2Rw_photo_2017-12-11_12-26-08.jpg">
     </ion-thumbnail>
