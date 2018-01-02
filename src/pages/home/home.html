@@ -1,9 +1,15 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>
       Inicio
     </ion-title>
   </ion-navbar>
+
 </ion-header>
 <ion-content padding id="page2">
   <ion-card *ngFor="let chollo of chollos">
@@ -26,7 +32,8 @@
       <ion-col>
         <button ion-button icon-left clear small (click)="addLikeTo(chollo.getId())">
           <ion-icon name="thumbs-up"></ion-icon>
-          <div><span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
+          <div>
+            <span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
         </button>
       </ion-col>
       <ion-col>

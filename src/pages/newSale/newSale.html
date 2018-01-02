@@ -37,13 +37,13 @@
       </ion-label>
       <ion-input #precioDespues type="number" placeholder="" value="{{chollo != null ? chollo.getPrecioDespues() : ''}}"></ion-input>
     </ion-item>
-    <ion-item id="newSale-input7">
+    <ion-item id="newSale-input7" [hidden]="usuario.getAdministrador()">
       <ion-label>
         Empresa:
       </ion-label>
       <ion-input #empresaNoPatrocinada type="text" placeholder="" value="{{chollo != null ? chollo.getEmpresaNoPatrocinada() : ''}}"></ion-input>
     </ion-item>
-    <ion-item id="newSale-toggle2">
+    <ion-item id="newSale-toggle2" [hidden]="!usuario.getAdministrador()">
       <ion-label>
         Empresa patrocinada
       </ion-label>
@@ -63,10 +63,12 @@
       Eliminar
     </button>
   </form>
-  <button id="newSale-button5" ion-button color="dark" block (click)="editSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)" *ngIf="chollo != null">
+  <button id="newSale-button5" ion-button color="dark" block (click)="editSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)"
+    *ngIf="chollo != null">
     Editar
   </button>
-  <button id="newSale-button6" ion-button color="dark" block (click)="createSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)" *ngIf="chollo == null">
+  <button id="newSale-button6" ion-button color="dark" block (click)="createSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)"
+    *ngIf="chollo == null">
     Publicar
   </button>
 </ion-content>

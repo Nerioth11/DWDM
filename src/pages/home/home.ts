@@ -8,6 +8,8 @@ import { Reaccion } from '../../entities/Reaccion';
 import { Usuario } from '../../entities/Usuario';
 import { USUARIOS } from '../../db/db';
 import { newSalePage } from '../newSale/newSale';
+import { Categoria } from '../../entities/Categoria';
+import { CategoriaFacade } from '../../facades/CategoriaFacade';
 
 @Component({
   selector: 'page-Home',
@@ -16,12 +18,15 @@ import { newSalePage } from '../newSale/newSale';
 export class HomePage {
 
   chollos:Chollo[];
+  categorias:Categoria[];
 
   constructor(public navCtrl: NavController,
               private cholloFacade: CholloFacade,
+              private categoriaFacade: CategoriaFacade,
               private reaccionFacade: ReaccionFacade
              ) {
     this.getChollos();
+    this.loadCategories();
   }
 
   goToDetails(idChollo){
@@ -50,6 +55,10 @@ export class HomePage {
     if(this.reaccionFacade.find(reaccion) != null && !this.reaccionFacade.find(reaccion).getPositiva()) return;
     this.reaccionFacade.remove(reaccion);
     this.reaccionFacade.create(reaccion);
+  }
+
+  loadCategories() {
+    this.categorias = this.categoriaFacade.findAll();
   }
 
 }
