@@ -22,6 +22,7 @@ import { CholloFacade } from '../facades/CholloFacade';
 import { EmpresaPatrocinadaFacade } from '../facades/EmpresaPatrocinadaFacade';
 import { CategoryService } from '../services/CategoryService';
 import { UserService } from '../services/UserService';
+import {AutoHideDirective} from '../directives/auto-hide/auto-hide';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { UserService } from '../services/UserService';
     newSalePage,
     myProfilePage,
     LoginPage,
-    SignupPage
+    SignupPage,
+    AutoHideDirective
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@
   <ion-searchbar class="searchbar" (ionInput)="filterSales($event)" animated="true" showCancelButton="true" cancelButtonText="Cancelar" placeholder="Buscar chollo"></ion-searchbar>
 </ion-header>
 
-<ion-content padding id="page2">
+<ion-content padding id="page2" auto-hide>
   <ion-card *ngFor="let chollo of chollos" [hidden]="categoryService.getCategoryId() > -1 && categoryService.getCategoryId() != chollo.getCategoria().getId()">
     <ion-item>
       <ion-avatar item-start>
