@@ -4,6 +4,7 @@ import { DetailsPage } from '../details/details';
 import { Chollo } from '../../entities/Chollo';
 import { CholloFacade } from '../../facades/CholloFacade';
 import { CategoryService } from '../../services/CategoryService';
+import { newSalePage } from '../newSale/newSale';
 
 @Component({
   selector: 'page-popular',
@@ -29,6 +30,10 @@ export class PopularPage {
 
   getPopulars(){
     this.chollos = this.cholloFacade.findPopulars();
+  }
+
+  goToNewSale(){
+    this.navCtrl.push(newSalePage); 
   }
 
 }

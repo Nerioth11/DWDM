@@ -23,6 +23,7 @@ import { EmpresaPatrocinadaFacade } from '../facades/EmpresaPatrocinadaFacade';
 import { CategoryService } from '../services/CategoryService';
 import { UserService } from '../services/UserService';
 import {AutoHideDirective} from '../directives/auto-hide/auto-hide';
+import {HideHeaderDirective} from '../directives/hide-header/hide-header';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {AutoHideDirective} from '../directives/auto-hide/auto-hide';
     myProfilePage,
     LoginPage,
     SignupPage,
-    AutoHideDirective
+    AutoHideDirective,
+    HideHeaderDirective
   ],
   imports: [
     BrowserModule,

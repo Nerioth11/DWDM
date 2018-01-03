@@ -5,7 +5,7 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content parallax>
+<ion-content auto-hide>
   <div class="bg">
 
   </div>
@@ -47,6 +47,11 @@
         </ion-row>
       </ion-grid>
     </div>
-
   </div>
+
+  <ion-fab bottom right #fab>
+    <button ion-fab (click)="goToNewSale()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

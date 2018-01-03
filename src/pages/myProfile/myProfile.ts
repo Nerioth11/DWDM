@@ -8,6 +8,7 @@ import { USUARIOS } from '../../db/db';
 import { UsuarioFacade } from '../../facades/UsuarioFacade';
 import { Chollo } from '../../entities/Chollo';
 import { UserService } from '../../services/UserService';
+import { newSalePage } from '../newSale/newSale';
 
 @Component({
   selector: 'page-myProfile',
@@ -40,5 +41,9 @@ export class myProfilePage {
 
   goToDetails(idChollo){
     this.navCtrl.push(DetailsPage, {idChollo: idChollo});
+  }
+
+  goToNewSale(){
+    this.navCtrl.push(newSalePage); 
   }
 }
