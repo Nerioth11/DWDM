@@ -6,7 +6,6 @@ import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { UsuarioFacade } from '../../facades/UsuarioFacade';
 import { newSalePage } from '../newSale/newSale';
 import { Usuario } from '../../entities/Usuario';
-import { USUARIOS } from '../../db/db';
 import { FavoritoFacade } from '../../facades/FavoritoFacade';
 import { Favorito } from '../../entities/Favorito';
 import { ReaccionFacade } from '../../facades/ReaccionFacade';

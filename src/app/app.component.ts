@@ -8,26 +8,30 @@ import { CategoriaFacade } from '../facades/CategoriaFacade';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
 import { ViewChild } from '@angular/core';
 import { CategoryService } from '../services/CategoryService';
+import { LoginPage } from '../pages/login/login';
+import { UserService } from '../services/UserService';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild('myNav')navCtrl: NavController;
-  rootPage:any = TabsControllerPage;
+  rootPage:any;
   categorias:Categoria[];
 
   constructor(platform: Platform, 
               statusBar: StatusBar, 
               splashScreen: SplashScreen,
               private categoriaFacade: CategoriaFacade,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService,
+              private userService: UserService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
 
+      this.rootPage = this.userService.getUser() == null ? LoginPage : TabsControllerPage;
       this.categorias = this.categoriaFacade.findAll();
     });
   }

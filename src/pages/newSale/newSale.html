@@ -59,16 +59,18 @@
         <ion-option value="{{categoria.getId()}}" *ngFor="let categoria of categorias">{{categoria.getNombre()}}</ion-option>
       </ion-select>
     </ion-item>
-    <button id="newSale-button11" ion-button color="assertive" block *ngIf="idChollo != undefined" (click)="deleteSave()">
-      Eliminar
-    </button>
+    <div *ngIf="!dataIsCorrect" style="color: red">Rellene todos los campos</div>
   </form>
-  <button id="newSale-button5" ion-button color="dark" block (click)="editSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)"
+  <button id="newSale-button6" ion-button color="assertive" block (click)="createSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)"
+   *ngIf="chollo == null">
+    Publicar
+  </button>
+  <button id="newSale-button5" ion-button color="assertive" block (click)="editSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)"
     *ngIf="chollo != null">
     Editar
   </button>
-  <button id="newSale-button6" ion-button color="dark" block (click)="createSave(titulo.value,enlace.value,descripcion.value,precioAntes.value,precioDespues.value,empresaNoPatrocinada.value,empresaPatrocinada.value,categoria.value)"
-    *ngIf="chollo == null">
-    Publicar
+  <div class="spacer" style="height:40px;" id="spacer1"></div>
+  <button id="newSale-button11" ion-button color="dark" block *ngIf="idChollo != undefined" (click)="deleteSave()">
+    Eliminar
   </button>
 </ion-content>

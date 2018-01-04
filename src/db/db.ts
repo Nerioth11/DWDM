@@ -1,10 +1,6 @@
 import { Reaccion } from "../entities/Reaccion";
-import { CholloFacade } from "../facades/CholloFacade";
-import { UsuarioFacade } from "../facades/UsuarioFacade";
 import { Categoria } from "../entities/Categoria";
 import { Chollo } from "../entities/Chollo";
-import { CategoriaFacade } from "../facades/CategoriaFacade";
-import { EmpresaPatrocinadaFacade } from "../facades/EmpresaPatrocinadaFacade";
 import { EmpresaPatrocinada } from "../entities/EmpresaPatrocinada";
 import { Favorito } from "../entities/Favorito";
 import { Usuario } from "../entities/Usuario";
@@ -24,9 +20,9 @@ export const EMPRESAS_PATROCINADAS:EmpresaPatrocinada[] = [
 
 export const USUARIOS:Usuario[] = [
     new Usuario("Admin", "111111111", true, 1),
-    new Usuario("Usuario 2", "222222222", false, 2), 
-    new Usuario("Usuario 3", "333333333", false, 3),
-    new Usuario("Usuario 5", "444444444", false, 4),
+    new Usuario("Usuario 1", "222222222", false, 2), 
+    new Usuario("Usuario 2", "333333333", false, 3),
+    new Usuario("Usuario 3", "444444444", false, 4),
 ];
 
 export const CHOLLOS:Chollo[] = [

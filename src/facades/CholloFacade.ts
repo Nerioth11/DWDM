@@ -1,7 +1,4 @@
 import { Chollo } from "../entities/Chollo";
-import { UsuarioFacade } from "./UsuarioFacade";
-import { CategoriaFacade } from "./CategoriaFacade";
-import { EmpresaPatrocinadaFacade } from "./EmpresaPatrocinadaFacade";
 import { Usuario } from "../entities/Usuario";
 import { FavoritoFacade } from "./FavoritoFacade";
 import { ReaccionFacade } from "./ReaccionFacade";

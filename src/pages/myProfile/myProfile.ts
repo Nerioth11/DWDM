@@ -4,7 +4,6 @@ import { PopularPage } from '../popular/popular';
 import { DetailsPage } from '../details/details';
 import { CholloFacade } from '../../facades/CholloFacade';
 import { Usuario } from '../../entities/Usuario';
-import { USUARIOS } from '../../db/db';
 import { UsuarioFacade } from '../../facades/UsuarioFacade';
 import { Chollo } from '../../entities/Chollo';
 import { UserService } from '../../services/UserService';

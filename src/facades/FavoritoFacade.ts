@@ -1,7 +1,5 @@
 import { Chollo } from "../entities/Chollo";
-import { UsuarioFacade } from "./UsuarioFacade";
 import { Favorito } from "../entities/Favorito";
-import { CholloFacade } from "./CholloFacade";
 import { Injectable } from "@angular/core";
 import { AbstractSaveUserRelationFacade } from "./AbstractSaveUserRelationFacade";
 import { SaveUserRelation } from "../entities/SaveUserRelation";

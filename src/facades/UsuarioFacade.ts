@@ -25,14 +25,14 @@ export class UsuarioFacade extends AbstractEntityFacade{
     public remove(entity: Usuario) { // DELETE
         USUARIOS.forEach(
             (usuario, index) => {
-                if (usuario.getId() === entity.getId()) USUARIOS.splice(index, 1);
+                if (usuario.getId() == entity.getId()) USUARIOS.splice(index, 1);
             }
         );
     }
     // SELECT * FROM usuario WHERE id=?;
     public find(id: Number) {
         return this.findAll().find(
-            (usuario) => usuario.getId() === id 
+            (usuario) => usuario.getId() == id 
         );
     }
     // SELECT * FROM usuario;
@@ -42,7 +42,13 @@ export class UsuarioFacade extends AbstractEntityFacade{
     // SELECT * FROM usuario WHERE telefono=?;
     public findByTelephone(telefono: String) {
         return this.findAll().find(
-            (usuario) => usuario.getTelefono() === telefono
+            (usuario) => usuario.getTelefono() == telefono
+        );
+    }
+    // SELECT * FROM usuario WHERE alias=?;
+    public findByAlias(alias: String) {
+        return this.findAll().find(
+            (usuario) => usuario.getAlias() == alias
         );
     }
 

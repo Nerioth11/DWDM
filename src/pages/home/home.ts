@@ -5,8 +5,6 @@ import { CholloFacade } from '../../facades/CholloFacade';
 import { Chollo } from '../../entities/Chollo';
 import { ReaccionFacade } from '../../facades/ReaccionFacade';
 import { Reaccion } from '../../entities/Reaccion';
-import { Usuario } from '../../entities/Usuario';
-import { USUARIOS } from '../../db/db';
 import { newSalePage } from '../newSale/newSale';
 import { Categoria } from '../../entities/Categoria';
 import { CategoriaFacade } from '../../facades/CategoriaFacade';

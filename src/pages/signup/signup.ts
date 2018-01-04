@@ -1,22 +1,39 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { HomePage } from '../home/home';
-import { DetailsPage } from '../details/details';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { TabsControllerPage } from '../tabs-controller/tabs-controller';
+import { UserService } from '../../services/UserService';
+import { Usuario } from '../../entities/Usuario';
 
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
 })
 export class SignupPage {
-  // this tells the tabs component which Pages
-  // should be each tab's root Page
-  constructor(public navCtrl: NavController) {
+
+  dataIsCorrect: Boolean; 
+  aliasNotAvailable: Boolean;
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private userService: UserService) {
+    this.dataIsCorrect = true;
+    this.aliasNotAvailable = false;
   }
-  goToHome(params){
-    if (!params) params = {};
-    this.navCtrl.push(HomePage);
-  }goToDetails(params){
-    if (!params) params = {};
-    this.navCtrl.push(DetailsPage);
+
+  goToHome(){
+    this.navCtrl.push(TabsControllerPage);
   }
+  
+  checkAlias(alias: string){
+    if(!this.formIsCorrect(alias)) return;
+    var user:Usuario = this.userService.createUser(this.navParams.get("telefono"), alias);
+    user == null ? this.aliasNotAvailable = true : this.goToHome();
+  }
+
+  formIsCorrect(alias: string){
+    this.dataIsCorrect = alias.trim().length > 0;
+    return this.dataIsCorrect;
+  }
+
 }

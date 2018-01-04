@@ -6,9 +6,7 @@ import { Chollo } from '../../entities/Chollo';
 import { CholloFacade } from '../../facades/CholloFacade';
 import { EmpresaPatrocinada } from '../../entities/EmpresaPatrocinada';
 import { EmpresaPatrocinadaFacade } from '../../facades/EmpresaPatrocinadaFacade';
-import { UsuarioFacade } from '../../facades/UsuarioFacade';
 import { Usuario } from '../../entities/Usuario';
-import { USUARIOS } from '../../db/db';
 import { HomePage } from '../home/home';
 import { CategoriaFacade } from '../../facades/CategoriaFacade';
 import { Categoria } from '../../entities/Categoria';
@@ -27,17 +25,18 @@ export class newSalePage {
   usuario:Usuario;
   empresaPatrocinadaActual:Number;
   categoriaActual:Number;
+  dataIsCorrect:Boolean;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private cholloFacade: CholloFacade,
               private empresaPatrocinadaFacade: EmpresaPatrocinadaFacade,
               private categoriaFacade: CategoriaFacade,
-              private usuarioFacade: UsuarioFacade,
               private userService: UserService) {
 
     this.idChollo =  navParams.get("idChollo");
     this.usuario = this.userService.getUser();
+    this.dataIsCorrect = true;
     this.loadCompanies();
     this.loadCategories();
     if(this.idChollo == undefined) return;
@@ -77,39 +76,54 @@ export class newSalePage {
     this.goToHome();
   }
 
-
-  editSave(titulo:String, enlace:String, descripcion:String, precioAntes:Number, precioDespues:Number, empresaNoPatrocinada:String, empresaPatrocinada:Number, categoria:Number) {
+  editSave(titulo:String, enlace:String, descripcion:String, precioAntes:string, precioDespues:string, empresaNoPatrocinada:String, empresaPatrocinada:string, categoria:string) {
+    if(!this.formIsCorrect(titulo, enlace, descripcion, precioAntes, precioDespues, empresaNoPatrocinada, empresaPatrocinada, categoria)) return;
     this.chollo.setTitulo(titulo);
     this.chollo.setEnlace(enlace);
     this.chollo.setDescripcion(descripcion);
-    this.chollo.setPrecioAntes(precioAntes);
-    this.chollo.setPrecioDespues(precioDespues);
+    this.chollo.setPrecioAntes(Number(precioAntes));
+    this.chollo.setPrecioDespues(Number(precioDespues));
     this.chollo.setFechaActualizacion(new Date());
     this.chollo.setEmpresaNoPatrocinada(empresaNoPatrocinada);
     this.chollo.setEmpresaPatrocinada(
-      this.usuario.getAdministrador() ? this.empresaPatrocinadaFacade.find(empresaPatrocinada) : new EmpresaPatrocinada("-", -1)
+      this.usuario.getAdministrador() ? this.empresaPatrocinadaFacade.find(Number(empresaPatrocinada)) : new EmpresaPatrocinada("-", -1)
     );
-    this.chollo.setCategoria(this.categoriaFacade.find(categoria));
+    this.chollo.setCategoria(this.categoriaFacade.find(Number(categoria)));
     this.cholloFacade.edit(this.chollo);
     this.goToHome();
   }
-  createSave(titulo:String, enlace:String, descripcion:String, precioAntes:Number, precioDespues:Number, empresaNoPatrocinada:String, empresaPatrocinada:Number, categoria:Number) {
+
+  createSave(titulo:String, enlace:String, descripcion:String, precioAntes:string, precioDespues:string, empresaNoPatrocinada:String, empresaPatrocinada:string, categoria:string) {
+    if(!this.formIsCorrect(titulo, enlace, descripcion, precioAntes, precioDespues, empresaNoPatrocinada, empresaPatrocinada, categoria)) return;
     var newSave = new Chollo
     (
       titulo,
       enlace, 
       descripcion, 
-      precioAntes,
-      precioDespues,
+      Number(precioAntes),
+      Number(precioDespues),
       new Date(),
       new Date(), 
       empresaNoPatrocinada, 
-      this.usuario.getAdministrador() ? this.empresaPatrocinadaFacade.find(empresaPatrocinada) : new EmpresaPatrocinada("-", -1),
+      this.usuario.getAdministrador() ? this.empresaPatrocinadaFacade.find(Number(empresaPatrocinada)) : new EmpresaPatrocinada("-", -1),
       this.usuario, 
-      this.categoriaFacade.find(categoria), 
-      Math.trunc((Math.random() * 1000) + 1)
+      this.categoriaFacade.find(Number(categoria)), 
+      Math.trunc((Math.random() * 1000) + 4)
     )
     this.cholloFacade.create(newSave);
     this.goToHome();
+  }
+
+  formIsCorrect(titulo:String, enlace:String, descripcion:String, precioAntes:string, precioDespues:string, empresaNoPatrocinada:String, empresaPatrocinada:string, categoria:string){
+    this.dataIsCorrect = 
+      (titulo.trim().length > 0) &&
+      (enlace.trim().length > 0) &&
+      (descripcion.trim().length > 0) &&
+      (!isNaN(parseFloat(precioAntes))) &&
+      (!isNaN(parseFloat(precioDespues))) &&
+      (this.usuario.getAdministrador() || (!this.usuario.getAdministrador() && empresaNoPatrocinada.trim().length > 0)) &&
+      (!this.usuario.getAdministrador() || (this.usuario.getAdministrador() && (!isNaN(parseFloat(empresaPatrocinada))))) &&
+      (!isNaN(parseFloat(categoria)));
+    return this.dataIsCorrect;
   }
 }

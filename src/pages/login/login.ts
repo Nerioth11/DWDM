@@ -1,26 +1,39 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { HomePage } from '../home/home';
-import { DetailsPage } from '../details/details';
 import { SignupPage } from '../signup/signup';
+import { UserService } from '../../services/UserService';
+import { Usuario } from '../../entities/Usuario';
+import { TabsControllerPage } from '../tabs-controller/tabs-controller';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  // this tells the tabs component which Pages
-  // should be each tab's root Page
-  constructor(public navCtrl: NavController) {
+  
+  dataIsCorrect: Boolean;
+
+  constructor(public navCtrl: NavController,
+              private userService: UserService) {
+    this.dataIsCorrect = true;
   }
-  goToHome(params){
-    if (!params) params = {};
-    this.navCtrl.push(HomePage);
-  }goToDetails(params){
-    if (!params) params = {};
-    this.navCtrl.push(DetailsPage);
-  }goToSignup(params){
-    if (!params) params = {};
-    this.navCtrl.push(SignupPage);
+
+  goToHome(){
+    this.navCtrl.push(TabsControllerPage, {});
+  }
+   
+  goToSignup(telefono: String){
+    this.navCtrl.push(SignupPage, {telefono: telefono});
+  }
+
+  checkTelephone(telefono: string){
+    if(!this.formIsCorrect(telefono)) return;
+    var user:Usuario = this.userService.setUser(telefono);
+    user == null ? this.goToSignup(telefono) : this.goToHome();
+  }
+
+  formIsCorrect(telefono: string){
+    this.dataIsCorrect = !isNaN(parseFloat(telefono));
+    return this.dataIsCorrect;
   }
 }
