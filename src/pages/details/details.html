@@ -13,39 +13,40 @@
 <ion-content padding id="page5">
   <ion-card id="details-card25">
     <ion-list>
-      <img src="assets/img/Mw9LFxsDQ4W5DshIZWg9_41eEPpWcC3L.jpg" />
-      <ion-item color="none" id="details-list-item65">
-        <ion-avatar item-left>
-          <img src="assets/img/lXLk1u5ZTzSUBIDGdZIK_photo_2017-12-11_12-26-08.jpg" />
-        </ion-avatar>
-        <h2>
-          {{chollo.getUsuario().getAlias()}} - {{usuarioFacade.getLikesOf(chollo.getUsuario())}} Likes {{usuarioFacade.getDislikesOf(chollo.getUsuario())}}
-          Dislikes
-        </h2>
-      </ion-item>
-      <ion-item id="details-list-item-container11">
-        <div id="details-markdown12" class="show-list-numbers-and-dots">
-          <h1>{{chollo.getTitulo()}}</h1>
-          <p>De {{chollo.getPrecioAntes()}}€ a {{chollo.getPrecioDespues()}}€</p>
-          <p>Descripcion: {{chollo.getDescripcion()}}</p>
-          <p>Empresa: {{chollo.getUsuario().getAdministrador() ? chollo.getEmpresaPatrocinada().getNombre() : chollo.getEmpresaNoPatrocinada()}}</p>
-          <p>Categoria: {{chollo.getCategoria().getNombre()}}</p>
-        </div>
-      </ion-item>
+        <ion-item (click)="goToDetails(chollo.getId())">
+            <ion-avatar item-start>
+              <img src="assets/img/W9n9fiZRTfWk2kqBr2Rw_photo_2017-12-11_12-26-08.jpg">
+            </ion-avatar>
+            <h2>{{chollo.getUsuario().getAlias()}}</h2>
+            <h3>Reputación: {{(usuarioFacade.getLikesOf(chollo.getUsuario())) - (usuarioFacade.getDislikesOf(chollo.getUsuario()))}}</h3>
+          </ion-item>
+        <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg" (click)="goToDetails(chollo.getId())">
+      <ion-list>
+          <ion-item-divider color="light">Precio</ion-item-divider>
+          <ion-item>{{chollo.getPrecioAntes()}}€ a {{chollo.getPrecioDespues()}}€</ion-item>
+          <ion-item-divider color="light">Fecha</ion-item-divider>
+          <ion-item>{{chollo.getFechaActualizacion() | date: 'medium'}}</ion-item>
+          <ion-item-divider color="light">Descripción</ion-item-divider>
+          <ion-item>{{chollo.getDescripcion()}}</ion-item>
+          <ion-item-divider color="light">Empresa</ion-item-divider>
+          <ion-item>{{chollo.getUsuario().getAdministrador() ? chollo.getEmpresaPatrocinada().getNombre() : chollo.getEmpresaNoPatrocinada()}}</ion-item>
+          <ion-item-divider color="light">Categoría</ion-item-divider>
+          <ion-item>{{chollo.getCategoria().getNombre()}}</ion-item>
+        </ion-list>
       <ion-item color="none" id="details-list-item66">
         <ion-icon name="share" item-left></ion-icon>
         Compartir
       </ion-item>
       <ion-row>
         <ion-col>
-          <button ion-button icon-left clear small (click)="addLikeTo(chollo.getId())">
+          <button ion-button icon-left clear small (click)="addLikeTo(chollo.getId())" color="{{getColorForSave(chollo,true)}}">
             <ion-icon name="thumbs-up"></ion-icon>
             <div>
               <span #likes>{{cholloFacade.getLikesCountFor(chollo)}}</span> Likes</div>
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button icon-left clear small (click)="addDislikeTo(chollo.getId())">
+          <button ion-button icon-left clear small (click)="addDislikeTo(chollo.getId())" color="{{getColorForSave(chollo,false)}}">
             <ion-icon name="thumbs-down"></ion-icon>
             <div #dislikes>{{cholloFacade.getDislikesCountFor(chollo)}} Dislikes</div>
           </button>

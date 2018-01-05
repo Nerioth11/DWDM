@@ -10,6 +10,7 @@ import { Categoria } from '../../entities/Categoria';
 import { CategoriaFacade } from '../../facades/CategoriaFacade';
 import { CategoryService } from '../../services/CategoryService';
 import { UserService } from '../../services/UserService';
+import { UsuarioFacade } from '../../facades/UsuarioFacade';
 
 @Component({
   selector: 'page-Home',
@@ -25,7 +26,8 @@ export class HomePage {
               private categoriaFacade: CategoriaFacade,
               private reaccionFacade: ReaccionFacade,
               private categoryService: CategoryService,
-              private userService: UserService) {
+              private userService: UserService,
+              private usuarioFacade: UsuarioFacade) {
     this.loadCategories();
   }
 
@@ -74,5 +76,9 @@ export class HomePage {
         return (chollo.getTitulo().toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
+  }
+
+  getColorForSave(chollo:Chollo, positiva:Boolean){
+    return this.reaccionFacade.findByPositiva(new Reaccion (chollo, this.userService.getUser(), positiva)) == null? 'dark' : 'positive';
   }
 }

@@ -36,7 +36,7 @@ export class ReaccionFacade extends AbstractSaveUserRelationFacade{
     // INNER JOIN chollo ON reaccion.chollo = chollo.id)
     // INNER JOIN categoria ON chollo.categoria = categoria.id)
     // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada= empresaPatrocinada.id)
-    // WHERE reaccion.chollo=? AND reaccion.usuario=? AND reaccion.positiva=?;
+    // WHERE reaccion.chollo=? AND reaccion.usuario=?;
     public find(saveUserRelation: Reaccion) {
         return this.findAll().find(
             (reaccion) => 
@@ -44,6 +44,26 @@ export class ReaccionFacade extends AbstractSaveUserRelationFacade{
                 reaccion.getChollo().getId() == saveUserRelation.getChollo().getId()
         );
     }
+    // SELECT reaccion.positiva,
+    // usuario.id AS usuarioId,usuario.telefono,usuario.alias,usuario.administrador,
+    // chollo.id AS cholloId,chollo.titulo,chollo.enlace,chollo.descripcion,chollo.precioAntes,chollo.precioDespues,chollo.fechaCreacion,chollo.fechaActualizacion,chollo.empresaNoPatrocinada,
+    // empresaPatrocinada.id AS empresaPatrocinadaID, empresaPatrocinada.nombre AS empresaPatrocinadaNombre,
+    // categoria.id AS categoriaID, categoria.nombre AS categoriaNombre
+    // FROM ((((reaccion
+    // INNER JOIN usuario ON reaccion.usuario = usuario.id)
+    // INNER JOIN chollo ON reaccion.chollo = chollo.id)
+    // INNER JOIN categoria ON chollo.categoria = categoria.id)
+    // INNER JOIN empresaPatrocinada ON chollo.empresaPatrocinada= empresaPatrocinada.id)
+    // WHERE reaccion.chollo=? AND reaccion.usuario=? AND reaccion.positiva=?;
+    public findByPositiva(saveUserRelation: Reaccion) {
+        return this.findAll().find(
+            (reaccion) => 
+                reaccion.getUsuario().getId() == saveUserRelation.getUsuario().getId() && 
+                reaccion.getChollo().getId() == saveUserRelation.getChollo().getId() &&
+                reaccion.getPositiva() == saveUserRelation.getPositiva()
+        );
+    }
+
     // SOBRA PARA LA BD
     public findAll() {
         return REACCIONES;

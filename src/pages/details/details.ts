@@ -67,5 +67,9 @@ export class DetailsPage {
     this.reaccionFacade.remove(reaccion);
     this.reaccionFacade.create(reaccion);
   }
+
+  getColorForSave(chollo:Chollo, positiva:Boolean){
+    return this.reaccionFacade.findByPositiva(new Reaccion (chollo, this.userService.getUser(), positiva)) == null? 'dark' : 'positive';
+  }
   
 }
