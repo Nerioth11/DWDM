@@ -15,7 +15,7 @@
 
 <ion-content padding id="page2" auto-hide hide-header [header]="head">
   <ion-card *ngFor="let chollo of chollos" [hidden]="categoryService.getCategoryId() > -1 && categoryService.getCategoryId() != chollo.getCategoria().getId()">
-    <ion-item>
+    <ion-item (click)="goToDetails(chollo.getId())">
       <ion-avatar item-start>
         <img src="assets/img/W9n9fiZRTfWk2kqBr2Rw_photo_2017-12-11_12-26-08.jpg">
       </ion-avatar>
@@ -25,7 +25,7 @@
 
     <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg" (click)="goToDetails(chollo.getId())">
 
-    <ion-card-content>
+    <ion-card-content (click)="goToDetails(chollo.getId())">
       <h1>{{chollo.getTitulo()}}</h1>
       <p>De {{chollo.getPrecioAntes()}}€ a {{chollo.getPrecioDespues()}}€</p>
     </ion-card-content>
