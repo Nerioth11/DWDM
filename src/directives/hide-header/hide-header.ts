@@ -13,8 +13,6 @@ export class HideHeaderDirective {
   scrollContent;
 
   constructor(public element: ElementRef, public renderer: Renderer) {
-
-    console.log('Hello HideHeaderDirective Directive');
   }
 
   ngOnInit(){
