@@ -7,10 +7,10 @@ import { CholloFacade } from '../../facades/CholloFacade';
 import { EmpresaPatrocinada } from '../../entities/EmpresaPatrocinada';
 import { EmpresaPatrocinadaFacade } from '../../facades/EmpresaPatrocinadaFacade';
 import { Usuario } from '../../entities/Usuario';
-import { HomePage } from '../home/home';
 import { CategoriaFacade } from '../../facades/CategoriaFacade';
 import { Categoria } from '../../entities/Categoria';
 import { UserService } from '../../services/UserService';
+import { TabsControllerPage } from '../tabs-controller/tabs-controller';
 
 @Component({
   selector: 'page-newSale',
@@ -56,7 +56,7 @@ export class newSalePage {
   }
 
   goToHome(){
-    this.navCtrl.push(HomePage);
+    this.navCtrl.push(TabsControllerPage);
   }
 
   loadSaveInfo() {

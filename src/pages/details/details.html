@@ -15,12 +15,12 @@
     <ion-list>
         <ion-item (click)="goToDetails(chollo.getId())">
             <ion-avatar item-start>
-              <img src="assets/img/W9n9fiZRTfWk2kqBr2Rw_photo_2017-12-11_12-26-08.jpg">
+              <img src="assets/img/profile.jpg">
             </ion-avatar>
             <h2>{{chollo.getUsuario().getAlias()}}</h2>
             <h3>Reputación: {{(usuarioFacade.getLikesOf(chollo.getUsuario())) - (usuarioFacade.getDislikesOf(chollo.getUsuario()))}}</h3>
           </ion-item>
-        <img src="assets/img/V9RqScDnQdaHekEtN5Js_41eEPpWcC3L.jpg" (click)="goToDetails(chollo.getId())">
+        <img src="assets/img/4.jpg" (click)="goToDetails(chollo.getId())">
       <ion-list>
           <ion-item-divider color="light">Precio</ion-item-divider>
           <ion-item>{{chollo.getPrecioAntes()}}€ a {{chollo.getPrecioDespues()}}€</ion-item>
